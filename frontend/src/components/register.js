@@ -95,11 +95,17 @@ export default class Register extends Component {
   render() {
     return (
       <div className="register_parent">
-        <div id="rd-div">
+        <div className="rd-register-div">
           <img src="./logo.png" alt="" />
         </div>
 
         <div className="register_child">
+          <div className="left_register_child">
+            <h1>COLOR</h1>
+          </div>
+          <div className="right_register_child">
+            <h1>PALETTE</h1>
+          </div>
           <div className="register_form_div">
             <form className="register_form">
               <Link to="/">

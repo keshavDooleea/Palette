@@ -11,9 +11,9 @@ import Palette from "./components/palette";
 function App() {
   return (
     <Router>
-      <Route path="/register" component={Register}></Route>
-      <Route path="/palette" component={Palette}></Route>
-      <Route path={["/", "/login"]} component={Login}></Route>
+      <Route path={["/", "/login"]} exact strict component={Login}></Route>
+      <Route path="/register" exact component={Register}></Route>
+      <Route path="/palette" exact component={Palette}></Route>
     </Router>
   );
 }
