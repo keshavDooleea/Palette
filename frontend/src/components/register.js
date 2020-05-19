@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import back from "./back.png";
 import loading from "./loading.gif";
-import axios from "axios";
 import "../App.css";
 
 function closeErrorMsg(div) {
@@ -24,7 +23,7 @@ export default class Register extends Component {
     e.preventDefault();
 
     const createBtn = document.querySelector(".create_acc_btn");
-    const loadingGif = document.querySelector(".loading_gif");
+    const loadingGif = document.querySelector(".register_loading_gif");
     const errorMsgDiv = document.querySelector(".register_error_div");
     const errorMsg = document.querySelector(".register_msg");
 
@@ -121,7 +120,7 @@ export default class Register extends Component {
                 value="Create Account"
                 onClick={this.createAccount}
               />
-              <img className="loading_gif" src={loading} />
+              <img className="register_loading_gif" src={loading} />
               <div className="register_error_div">
                 <p className="register_msg">ERROR</p>
               </div>

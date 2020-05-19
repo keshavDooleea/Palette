@@ -234,7 +234,7 @@ body {
   width: 40px;
 }
 
-.loading_gif {
+.register_loading_gif {
   width: 60px;
   height: 60px;
   position: absolute;
@@ -245,7 +245,27 @@ body {
   user-select: none;
 }
 
-.register_error_div {
+.login_loading_gif {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  bottom: 35px;
+  left: 50%;
+  display: none;
+  transform: translateX(-50%);
+  user-select: none;
+}
+
+.pal {
+  width: 100px;
+  height: 100px;
+  background-color: #f3d55b;
+  z-index: 111111;
+  position: absolute;
+}
+
+.register_error_div,
+.login_error_div {
   width: 100%;
   height: 40px;
   position: absolute;

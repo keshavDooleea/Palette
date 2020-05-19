@@ -23,6 +23,42 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/palette", (req, res) => {
+  res.json({
+    route: "/palette",
+  });
+});
+
+// retrieve login info sent by client
+app.post("/login", async (req, res) => {
+  await User.findOne({ username: req.body.username }, (err, user) => {
+    // user not found
+    if (user == null) {
+      // user does not exists
+      res.json("not_exists");
+    }
+
+    // user found/exists
+    else {
+      // verify if password is the same
+      User.findOne(
+        { username: req.body.username, password: req.body.password },
+        (err, user2) => {
+          // password does not match
+          if (user2 == null) {
+            res.json("password_invalid");
+          } else {
+            res.json("success");
+          }
+        }
+      );
+    }
+  });
+});
+
+// set up post for register to be called in register.html
+// route to receive the request
+// listen to a post by client
 app.post("/register", (req, res) => {
   const user = {
     username: req.body.username.toString(),

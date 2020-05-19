@@ -5,13 +5,15 @@ import "./App.css";
 // components
 import Login from "./components/login";
 import Register from "./components/register";
+import Palette from "./components/palette";
 
 // form
 function App() {
   return (
     <Router>
-      <Route path={["/", "/login"]} component={Login}></Route>
       <Route path="/register" component={Register}></Route>
+      <Route path="/palette" component={Palette}></Route>
+      <Route path={["/", "/login"]} component={Login}></Route>
     </Router>
   );
 }
