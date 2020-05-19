@@ -12,6 +12,7 @@ Add your MongoDB account credentiels in .env file
 
 ```bash
 npm install mongoose express nodemon cors dotenv
+create .env file 
 nodemon server.js (to start the server)
 ```
 /frontend
