@@ -3,18 +3,18 @@
   padding: 0;
 }
 
-.palette {
+.profile {
   width: 100vw;
   height: 100vh;
 }
 
-.palette_nav {
+.profile_nav {
   width: 100%;
   height: 10vh;
 }
 
-.palette_main {
+.profile_main {
   width: 100%;
   height: 100vh;
-  background-color: gray;
+  background-color: rosybrown;
 }

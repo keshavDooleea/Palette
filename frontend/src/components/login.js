@@ -3,9 +3,16 @@ import { Link } from "react-router-dom";
 import loading from "./loading.gif";
 import "../App.css";
 
-function closeErrorMsg(div) {
+function displayMsg(div, msgElement, msg) {
+  div.style.display = "flex";
+  div.classList.remove("close");
+  div.classList.add("open");
+
+  msgElement.textContent = msg;
+
   setTimeout(function () {
-    div.style.display = "none";
+    div.classList.add("close");
+    div.classList.remove("open");
   }, 2500);
 }
 
@@ -29,14 +36,18 @@ export default class Login extends Component {
 
     // length validation
     if (username.length < 5) {
-      errorMsgDiv.style.display = "flex";
-      errorMsg.textContent = "Username must be longer than 5 letters!";
-      closeErrorMsg(errorMsgDiv);
+      displayMsg(
+        errorMsgDiv,
+        errorMsg,
+        "Username must be longer than 5 letters!"
+      );
       return;
     } else if (password.length < 5) {
-      errorMsgDiv.style.display = "flex";
-      errorMsg.textContent = "Password must be longer than 5 letters!";
-      closeErrorMsg(errorMsgDiv);
+      displayMsg(
+        errorMsgDiv,
+        errorMsg,
+        "Password must be longer than 5 letters!"
+      );
       return;
     } else {
       errorMsgDiv.style.display = "none";
@@ -71,31 +82,24 @@ export default class Login extends Component {
 
         // user does not exist
         if (data === "not_exists") {
-          errorMsgDiv.style.display = "flex";
-          errorMsg.textContent = "Username incorrect!";
-          closeErrorMsg(errorMsgDiv);
+          displayMsg(errorMsgDiv, errorMsg, "Username incorrect!");
         }
 
         // wrong password
         else if (data === "password_invalid") {
-          errorMsgDiv.style.display = "flex";
-          errorMsg.textContent = "Wrong password!";
-          closeErrorMsg(errorMsgDiv);
+          displayMsg(errorMsgDiv, errorMsg, "Wrong password!");
         }
 
         // success
         else if (data === "success") {
-          errorMsgDiv.style.display = "flex";
-          errorMsg.textContent = "Login successful!";
           errorMsg.style.color = "rgb(64, 122, 64)";
+          displayMsg(errorMsgDiv, errorMsg, "Login successful!");
+          errorMsg.style.color = "rgb(189, 76, 76);";
 
           // redirect to palette.html
           setTimeout(() => {
-            errorMsg.style.color = "rgb(189, 76, 76);";
-            errorMsgDiv.style.display = "none";
-
             window.location.assign("/palette");
-          }, 2500);
+          }, 2600);
         }
       });
   }

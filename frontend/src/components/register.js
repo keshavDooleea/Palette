@@ -4,9 +4,16 @@ import back from "./back.png";
 import loading from "./loading.gif";
 import "../App.css";
 
-function closeErrorMsg(div) {
+function displayMsg(div, msgElement, msg) {
+  div.style.display = "flex";
+  div.classList.remove("close");
+  div.classList.add("open");
+
+  msgElement.textContent = msg;
+
   setTimeout(function () {
-    div.style.display = "none";
+    div.classList.add("close");
+    div.classList.remove("open");
   }, 2500);
 }
 
@@ -33,15 +40,19 @@ export default class Register extends Component {
 
     // length validation
     if (username.length < 5) {
-      errorMsgDiv.style.display = "flex";
-      errorMsg.textContent = "Username must be longer than 5 letters!";
-      closeErrorMsg(errorMsgDiv);
+      displayMsg(
+        errorMsgDiv,
+        errorMsg,
+        "Username must be longer than 5 letters!"
+      );
 
       return;
     } else if (password.length < 5) {
-      errorMsgDiv.style.display = "flex";
-      errorMsg.textContent = "Password must be longer than 5 letters!";
-      closeErrorMsg(errorMsgDiv);
+      displayMsg(
+        errorMsgDiv,
+        errorMsg,
+        "Password must be longer than 5 letters!"
+      );
 
       return;
     } else {
@@ -75,19 +86,16 @@ export default class Register extends Component {
 
         // user already exists
         if (data === "exists") {
-          errorMsgDiv.style.display = "flex";
-          errorMsg.textContent = "Username already exists!";
-          closeErrorMsg(errorMsgDiv);
+          displayMsg(errorMsgDiv, errorMsg, "Username unavailable!");
         } else {
-          errorMsgDiv.style.display = "flex";
-          errorMsg.textContent = "Account successfully created!";
           errorMsg.style.color = "rgb(64, 122, 64)";
+          displayMsg(errorMsgDiv, errorMsg, "Account successfully created!");
+          errorMsg.style.color = "rgb(189, 76, 76);";
 
           // redirect to /login
           setTimeout(() => {
-            errorMsgDiv.style.display = "none";
             window.location.assign("/login");
-          }, 2500);
+          }, 2600);
         }
       });
   }

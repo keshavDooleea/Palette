@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route /*Redirect*/ } from "react-router-dom";
 import "./App.css";
 
 // components
 import Login from "./components/login";
 import Register from "./components/register";
 import Palette from "./components/palette";
+import Community from "./components/community";
+import Profile from "./components/profile";
 
 // form
 class App extends Component {
@@ -35,7 +37,9 @@ class App extends Component {
       <Router>
         <Route path={["/", "/login"]} exact strict component={Login}></Route>
         <Route path="/register" exact strict component={Register}></Route>
-        <Route path="/palette" exact component={Palette}></Route>
+        <Route path="/palette/:username" exact component={Palette}></Route>
+        <Route path="/community" exact component={Community}></Route>
+        <Route path="/profile" exact component={Profile}></Route>
       </Router>
     );
   }
