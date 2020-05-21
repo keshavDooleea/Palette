@@ -70,22 +70,21 @@ export default class Login extends Component {
         loadingGif.style.display = "none";
 
         // user does not exist
-        if (data == "not_exists") {
+        if (data === "not_exists") {
           errorMsgDiv.style.display = "flex";
           errorMsg.textContent = "Username incorrect!";
           closeErrorMsg(errorMsgDiv);
         }
 
         // wrong password
-        else if (data == "password_invalid") {
+        else if (data === "password_invalid") {
           errorMsgDiv.style.display = "flex";
           errorMsg.textContent = "Wrong password!";
           closeErrorMsg(errorMsgDiv);
         }
 
         // success
-        else if (data == "success") {
-          console.log("SSSSS");
+        else if (data === "success") {
           errorMsgDiv.style.display = "flex";
           errorMsg.textContent = "Login successful!";
           errorMsg.style.color = "rgb(64, 122, 64)";
@@ -116,7 +115,7 @@ export default class Login extends Component {
             <h1>PALETTE</h1>
           </div>
           <div className="login_form_div">
-            <form className="login_form">
+            <form className="login_form" autoComplete="off">
               <h1>LOGIN</h1>
               <fieldset>
                 <legend>Username</legend>
@@ -138,7 +137,11 @@ export default class Login extends Component {
                     Register?
                   </Link>
                 </button>
-                <img className="login_loading_gif" src={loading} />
+                <img
+                  className="login_loading_gif"
+                  src={loading}
+                  alt="loading"
+                />
                 <div className="login_error_div">
                   <p className="login_msg">ERROR</p>
                 </div>

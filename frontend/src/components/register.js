@@ -74,7 +74,7 @@ export default class Register extends Component {
         loadingGif.style.display = "none";
 
         // user already exists
-        if (data == "exists") {
+        if (data === "exists") {
           errorMsgDiv.style.display = "flex";
           errorMsg.textContent = "Username already exists!";
           closeErrorMsg(errorMsgDiv);
@@ -107,7 +107,7 @@ export default class Register extends Component {
             <h1>PALETTE</h1>
           </div>
           <div className="register_form_div">
-            <form className="register_form">
+            <form className="register_form" autoComplete="off">
               <Link to="/">
                 <img className="register_back" src={back} alt="" />
               </Link>
@@ -126,7 +126,11 @@ export default class Register extends Component {
                 value="Create Account"
                 onClick={this.createAccount}
               />
-              <img className="register_loading_gif" src={loading} />
+              <img
+                className="register_loading_gif"
+                src={loading}
+                alt="loading_reg"
+              />
               <div className="register_error_div">
                 <p className="register_msg">ERROR</p>
               </div>
