@@ -45,6 +45,9 @@ export default class Palette extends Component {
     document.querySelector(".opacity").classList.remove("opacity_out");
     document.querySelector(".opacity").classList.add("opacity_in");
 
+    // adjust icon opacity
+    document.querySelectorAll(".adjust")[pos].style.opacity = "1";
+
     // show adjust div
     if (pos < 2) {
       document
@@ -80,6 +83,9 @@ export default class Palette extends Component {
     // overall opacity
     document.querySelector(".opacity").classList.remove("opacity_in");
     document.querySelector(".opacity").classList.add("opacity_out");
+
+    // adjust icon opacity
+    document.querySelectorAll(".adjust")[pos].style.opacity = "0.5";
 
     // hide adjust div
     document
