@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import back from "./back.png";
-import loading from "./loading.gif";
+import back from "../assets/back.png";
+import loading from "../assets/loading.gif";
 import "../App.css";
 
 function displayMsg(div, msgElement, msg) {

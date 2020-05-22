@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route /*Redirect*/ } from "react-router-dom";
 import "./App.css";
 
+// auth
+// https://reacttraining.com/react-router/web/example/auth-workflow
+
+// to access params in url: this.props.match.params.id
+
 // components
 import Login from "./components/login";
 import Register from "./components/register";
@@ -37,9 +42,9 @@ class App extends Component {
       <Router>
         <Route path={["/", "/login"]} exact strict component={Login}></Route>
         <Route path="/register" exact strict component={Register}></Route>
-        <Route path="/palette/:username" exact component={Palette}></Route>
-        <Route path="/community" exact component={Community}></Route>
-        <Route path="/profile" exact component={Profile}></Route>
+        <Route path="/palette/:id" exact component={Palette}></Route>
+        <Route path="/community/:id" exact component={Community}></Route>
+        <Route path="/profile/:id" exact component={Profile}></Route>
       </Router>
     );
   }

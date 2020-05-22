@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import loading from "./loading.gif";
+import loading from "../assets/loading.gif";
 import "../App.css";
 
 function displayMsg(div, msgElement, msg) {
@@ -58,7 +58,7 @@ export default class Login extends Component {
       password,
     };
 
-    console.log(user);
+    // console.log(user);
 
     // show loading spinner
     loginBtn.style.visibility = "hidden";
@@ -81,24 +81,24 @@ export default class Login extends Component {
         loadingGif.style.display = "none";
 
         // user does not exist
-        if (data === "not_exists") {
+        if (data.message === "not_exists") {
           displayMsg(errorMsgDiv, errorMsg, "Username incorrect!");
         }
 
         // wrong password
-        else if (data === "password_invalid") {
+        else if (data.message === "password_invalid") {
           displayMsg(errorMsgDiv, errorMsg, "Wrong password!");
         }
 
         // success
-        else if (data === "success") {
+        else if (data.message === "success") {
           errorMsg.style.color = "rgb(64, 122, 64)";
           displayMsg(errorMsgDiv, errorMsg, "Login successful!");
           errorMsg.style.color = "rgb(189, 76, 76);";
 
           // redirect to palette.html
           setTimeout(() => {
-            window.location.assign("/palette");
+            window.location.assign("/palette/" + data.user2._id);
           }, 2600);
         }
       });

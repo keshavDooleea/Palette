@@ -23,9 +23,11 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/palette", (req, res) => {
-  res.json({
-    route: "/palette",
+app.get("/palette/:id", async (req, res) => {
+  await User.find({ _id: req.params.id }, (err, user) => {
+    if (user != null) {
+      res.json(user);
+    }
   });
 });
 
@@ -48,7 +50,7 @@ app.post("/login", async (req, res) => {
           if (user2 == null) {
             res.json("password_invalid");
           } else {
-            res.json("success");
+            res.json({ user2, message: "success" });
           }
         }
       );

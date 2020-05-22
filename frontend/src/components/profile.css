@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css?family=Josefin+Sans:700&display=swap");
+@font-face {
+  font-family: manus;
+  src: url("../assets/manus.ttf");
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -6,11 +12,91 @@
 .profile {
   width: 100vw;
   height: 100vh;
+  font-family: "Josefin Sans", sans-serif;
 }
 
 .profile_nav {
   width: 100%;
   height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+    0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
+    0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
+}
+
+.color_palette_div {
+  width: 14%;
+  height: 70%;
+  margin-left: 40px;
+  box-sizing: border-box;
+  padding-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  background-color: #2fa8cc;
+  border-radius: 20px;
+  color: #fff;
+  font-family: manus;
+  font-size: 22px;
+}
+
+.nav_div {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+}
+
+.nav_div ul {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  list-style: none;
+  outline: none;
+  margin-top: 5px;
+  font-size: 18px;
+}
+
+.navlink {
+  text-decoration: none;
+  list-style: none;
+  color: #333;
+  position: relative;
+}
+
+.navlink::after {
+  content: " ";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #2fa8cc;
+  transform: scaleX(0) translateY(300%);
+  transition: 0.3s;
+}
+
+.navlink:hover::after {
+  transform: scaleX(1) translateY(300%);
+}
+
+.activeNavlink {
+  position: relative;
+}
+
+.activeNavlink::before {
+  content: " ";
+  width: 100%;
+  height: 2px;
+  background-color: #2fa8cc;
+  box-shadow: 0px 0px 4px #2fa8cc, 0px 0px 7px #2fa8cc;
+  position: absolute;
+  bottom: 0;
+  transform: translateY(300%);
 }
 
 .profile_main {
