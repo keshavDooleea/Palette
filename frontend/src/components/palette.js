@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import unlock from "../assets/unlock.png";
+import adjust from "../assets/adjust.png";
 import "./palette.css";
+import "./navbar.css";
 
 export default class Palette extends Component {
   constructor(props) {
@@ -70,7 +73,21 @@ export default class Palette extends Component {
         </nav>
 
         <div className="palette_main">
-          <div className="main_div"></div>
+          <div className="actions_div"></div>
+
+          <div className="palette_main_div">
+            <div className="hex_div">
+              <div className="color">
+                <div className="lock_adjust">
+                  <img src={unlock} alt="unlock" className="unlock"></img>
+                  <img src={adjust} alt="adjust" className="adjust"></img>
+                </div>
+              </div>
+              <div className="code_div">
+                <h1>#123456</h1>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="rose-round-div"></div>
       </div>

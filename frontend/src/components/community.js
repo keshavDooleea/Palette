@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import "./community.css";
+import "./navbar.css";
 
 export default class Community extends Component {
   constructor(props) {
