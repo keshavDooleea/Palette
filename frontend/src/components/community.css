@@ -20,6 +20,7 @@
   height: 10vh;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   background-color: #f4f3ef;
 }
 
@@ -70,21 +71,22 @@
   font-size: 18px;
 }
 
-.navlink {
+.navLink {
   text-decoration: none;
   list-style: none;
   color: rgb(51, 51, 51);
   position: relative;
 }
 
-.navlink::after {
+.navLink::after {
   content: " ";
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #2fa8cc;
+  background-color: #f4f3ef;
+  opacity: 0.5;
   transform: scaleX(0) translateY(300%);
   transition: 0.3s;
 }
@@ -93,11 +95,15 @@
   transform: scaleX(1) translateY(300%);
 }
 
-.activeNavlink {
+.activeLink {
   position: relative;
 }
 
-.activeNavlink::before {
+#logout {
+  color: #f4f3ef;
+}
+
+.activeLink::before {
   content: " ";
   width: 100%;
   height: 2px;

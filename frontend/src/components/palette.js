@@ -61,7 +61,7 @@ export default class Palette extends Component {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/" className="navLink">
+                <NavLink to="/" className="navLink" id="logout">
                   Log out
                 </NavLink>
               </li>
@@ -69,7 +69,10 @@ export default class Palette extends Component {
           </div>
         </nav>
 
-        <div className="palette_main"></div>
+        <div className="palette_main">
+          <div className="main_div"></div>
+        </div>
+        <div className="rose-round-div"></div>
       </div>
     );
   }

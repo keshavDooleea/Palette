@@ -23,8 +23,8 @@ export default class Community extends Component {
               <li>
                 <NavLink
                   to={`/palette/${this.state.id}`}
-                  className="navlink"
-                  activeClassName="activeNavlink"
+                  className="navLink"
+                  activeClassName="activeLink"
                 >
                   My Palette
                 </NavLink>
@@ -32,8 +32,8 @@ export default class Community extends Component {
               <li>
                 <NavLink
                   to={`/community/${this.state.id}`}
-                  className="navlink"
-                  activeClassName="activeNavlink"
+                  className="navLink"
+                  activeClassName="activeLink"
                 >
                   Community's Palette
                 </NavLink>
@@ -41,21 +41,21 @@ export default class Community extends Component {
               <li>
                 <NavLink
                   to={`/profile/${this.state.id}`}
-                  className="navlink"
-                  activeClassName="activeNavlink"
+                  className="navLink"
+                  activeClassName="activeLink"
                 >
                   Profile
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/" className="navlink">
+                <NavLink to="/" className="navLink" id="logout">
                   Log out
                 </NavLink>
               </li>
             </ul>
           </div>
         </nav>
-        <div className="community_main">COMMUNITY</div>
+        <div className="community_main">COMAMAAMAM</div>
       </div>
     );
   }
