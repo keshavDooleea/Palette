@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Josefin+Sans:700&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -207,7 +209,20 @@
 .actions_div {
   width: 80%;
   height: 15%;
-  background-color: #fff;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  position: relative;
+}
+
+.actions_div button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 20px;
+  font-family: "Josefin Sans", sans-serif;
+  color: #5d5858;
+  position: relative;
 }
 
 .rose-round-div {
