@@ -30,6 +30,12 @@ export default class Palette extends Component {
       });
   }
 
+  // when DOM loads up
+  componentDidMount() {
+    this.generate();
+    this.fillAdjust();
+  }
+
   adjust(pos) {
     // set the active container to the top of the hierarchy
     document.querySelectorAll(".hex_div")[pos].classList.add("highest_index");
@@ -46,7 +52,7 @@ export default class Palette extends Component {
     document.querySelector(".opacity").classList.add("opacity_in");
 
     // adjust icon opacity
-    document.querySelectorAll(".adjust")[pos].style.opacity = "1";
+    // document.querySelectorAll(".adjust")[pos].style.opacity = "1";
 
     // show adjust div
     if (pos < 2) {
@@ -85,7 +91,7 @@ export default class Palette extends Component {
     document.querySelector(".opacity").classList.add("opacity_out");
 
     // adjust icon opacity
-    document.querySelectorAll(".adjust")[pos].style.opacity = "0.5";
+    // document.querySelectorAll(".adjust")[pos].style.opacity = "0.5";
 
     // hide adjust div
     document
@@ -96,7 +102,41 @@ export default class Palette extends Component {
       [pos].classList.add("close_adjust_div");
   }
 
-  generate() {}
+  fillAdjust() {
+    // inputs
+    const hues = document.querySelectorAll(".hue");
+    const brightness = document.querySelectorAll(".brightness");
+    const sat = document.querySelectorAll(".saturation");
+
+    // const color = chroma.random();
+    // console.log(color);
+  }
+
+  // random hex code generator
+  generate() {
+    const colors = document.querySelectorAll(".color");
+    const colorCodes = document.querySelectorAll(".code_div h1");
+    const codes = "0123456789ABCDE";
+    let hex = "#";
+    let randomCode = 0;
+
+    for (let k = 0; k < this.state.NB_ITEMS; k++) {
+      // if item is not locked
+      if (!this.state.islocked[k]) {
+        // fill up 6 codes
+        for (let i = 0; i < 6; i++) {
+          randomCode = Math.random() * 15;
+          hex += codes[Math.floor(randomCode)];
+        }
+
+        // set up div colors
+        colors[k].style.backgroundColor = hex;
+        colorCodes[k].textContent = hex;
+      }
+      // re-initiate value
+      hex = "#";
+    }
+  }
 
   toggleLock(pos) {
     const lockImg = document.querySelectorAll(".unlock");
@@ -172,7 +212,7 @@ export default class Palette extends Component {
         <div className="palette_main">
           <div className="actions_div">
             <button>My List</button>
-            <button onClick={this.generate}>Generate Colors</button>
+            <button onClick={() => this.generate()}>Generate Colors</button>
             <button>Save Palette</button>
           </div>
 

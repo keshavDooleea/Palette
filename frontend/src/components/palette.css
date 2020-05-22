@@ -151,12 +151,14 @@
   top: 0;
   right: 10px;
   cursor: pointer;
+  color: #5d5858;
 }
 
 .open_left .close_adjust {
   position: absolute;
   top: 0;
   left: 10px;
+  color: #5d5858;
   cursor: pointer;
 }
 
@@ -201,7 +203,7 @@
 }
 
 .code_div h1 {
-  font-size: 22px;
+  font-size: 19px;
   color: #5d5858;
   cursor: pointer;
 }
