@@ -5,6 +5,7 @@ import unlock from "../assets/unlock.png";
 import adjust from "../assets/adjust.png";
 import "./palette.css";
 import "./navbar.css";
+import chroma from "chroma-js";
 
 export default class Palette extends Component {
   constructor(props) {
@@ -33,7 +34,6 @@ export default class Palette extends Component {
   // when DOM loads up
   componentDidMount() {
     this.generate();
-    this.fillAdjust();
   }
 
   adjust(pos) {
@@ -102,14 +102,47 @@ export default class Palette extends Component {
       [pos].classList.add("close_adjust_div");
   }
 
-  fillAdjust() {
+  fillAdjust(pos, hexCode) {
+    // remove the # from hex code
+    let hex = hexCode.substr(1);
+
     // inputs
     const hues = document.querySelectorAll(".hue");
     const brightness = document.querySelectorAll(".brightness");
     const sat = document.querySelectorAll(".saturation");
 
-    // const color = chroma.random();
-    // console.log(color);
+    // get current number in chroma to perform operations
+    const color = chroma(hex);
+
+    // hue color
+    hues[
+      pos
+    ].style.backgroundImage = `linear-gradient(to right, rgb(255, 0, 0), rgb(255,255 ,0),rgb(0, 255, 0),rgb(0, 255, 255),rgb(0,0,255),rgb(255,0,255),rgb(255,0,0))`;
+
+    // get chroma brightness of current color
+    const lowBrightness = color.set("hsl.l", 0);
+    const middleBrightness = color.set("hsl.l", 0.5);
+    const highBrightness = color.set("hsl.l", 1);
+    const brightnessScale = chroma.scale([
+      lowBrightness,
+      middleBrightness,
+      highBrightness,
+    ]);
+    brightness[
+      pos
+    ].style.backgroundImage = `linear-gradient(to right, ${brightnessScale(
+      0
+    )}, ${brightnessScale(0.5)}, ${brightnessScale(1)})`;
+
+    // get the lowest and highest saturation of corresponding color
+    const lowSat = color.set("hsl.s", 0);
+    const highSat = color.set("hsl.s", 1);
+    const saturationScale = chroma.scale([lowSat, color, highSat]);
+    sat[
+      pos
+    ].style.backgroundImage = `linear-gradient(to right, ${saturationScale(
+      0
+    )}, ${saturationScale(1)})`;
   }
 
   // random hex code generator
@@ -132,6 +165,7 @@ export default class Palette extends Component {
         // set up div colors
         colors[k].style.backgroundColor = hex;
         colorCodes[k].textContent = hex;
+        this.fillAdjust(k, hex);
       }
       // re-initiate value
       hex = "#";

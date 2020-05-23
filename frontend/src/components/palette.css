@@ -105,7 +105,7 @@
   align-items: center;
   justify-content: space-evenly;
   top: -2px;
-  background-color: #c9c2c2;
+  background-color: #f4f3ef;
   z-index: 3;
   transform: scaleX(0);
   transition: 0.5s;
@@ -139,7 +139,7 @@
 
 .adjust_div input {
   -webkit-appearance: none;
-  width: 70%;
+  width: 80%;
   position: relative;
   cursor: pointer;
   border-radius: 1rem;
