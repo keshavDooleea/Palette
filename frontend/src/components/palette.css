@@ -93,6 +93,83 @@
   animation: opacity-anim 0.5s ease-in-out forwards;
 }
 
+.saveDiv {
+  position: absolute;
+  top: -30px;
+  width: 70%;
+  height: 7%;
+  color: #888;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-family: manus;
+  font-size: 25px;
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: slide-in 1s ease-in-out forwards;
+}
+
+@keyframes slide-in {
+  0% {
+    transform: scaleX(0);
+  }
+  80%,
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.close_saveDiv {
+  transform-origin: right;
+  transform: scaleX(1);
+  animation: slide-out 1s ease-in-out forwards;
+}
+
+@keyframes slide-out {
+  0% {
+    transform: scaleX(1);
+  }
+  80%,
+  100% {
+    transform: scaleX(0);
+  }
+}
+
+.saveDiv p {
+  pointer-events: none;
+}
+
+.save_input {
+  width: 40%;
+  height: 30px;
+  padding: 5px 0;
+  padding-left: 7px;
+  color: #5d5858;
+  border: 1px solid #888;
+  outline: none;
+  background-color: inherit;
+  font-family: manus;
+  font-size: 35px;
+}
+
+.save_btn {
+  width: 90px;
+  height: 40px;
+  border: none;
+  color: #5d5858;
+  outline: none;
+  border-radius: 5px;
+  font-family: manus;
+  font-size: 20px;
+  cursor: pointer;
+  background: #f4f3ef;
+  box-shadow: 5px 5px 9px #d2d1ce, -5px -5px 9px #ffffff;
+}
+
+.save_btn:active {
+  box-shadow: inset -4px -4px 20px #d2d1ce, inset 3px 3px 7px #ffffff;
+}
+
 .hex_div {
   width: 200px;
   height: 80%;
@@ -247,6 +324,7 @@
   font-family: "Josefin Sans", sans-serif;
   color: #5d5858;
   position: relative;
+  background-color: #f4f3ef;
 }
 
 .rose-round-div {

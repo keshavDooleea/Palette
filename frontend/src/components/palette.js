@@ -8,6 +8,7 @@ import "./navbar.css";
 import chroma from "chroma-js";
 import * as clipboard from "clipboard-polyfill/dist/clipboard-polyfill.promise";
 
+// msg shown when user copies hex code
 const ShowCopiedMsg = () => {
   return (
     <div className="hexCopied">
@@ -24,6 +25,7 @@ export default class Palette extends Component {
       id: this.props.match.params.id,
       NB_ITEMS: 4,
       isCopied: false,
+      savedPressed: false,
       islocked: [false, false, false, false],
       imgArray: [unlock, unlock, unlock, unlock],
     };
@@ -241,6 +243,41 @@ export default class Palette extends Component {
     }
   }
 
+  // panel shown when user saves palette
+  ShowSavedPanel() {
+    const generateBtn = document.querySelector(".generate_btn");
+
+    // turn off btn
+    generateBtn.disabled = true;
+    generateBtn.style.opacity = "0.3";
+
+    return (
+      <div className="saveDiv">
+        <p>Name your palette: </p>
+        <input type="text" className="save_input" spellCheck="false"></input>
+        <input type="submit" className="save_btn" value="Save"></input>
+        <button
+          className="save_btn"
+          onClick={() => {
+            document.querySelector(".saveDiv").classList.add("close_saveDiv");
+            // turn on btn
+            generateBtn.disabled = false;
+            generateBtn.style.opacity = "1";
+
+            // wait for animation
+            setTimeout(() => {
+              this.setState({
+                savedPressed: false,
+              });
+            }, 1200);
+          }}
+        >
+          Cancel
+        </button>
+      </div>
+    );
+  }
+
   // illuminate current div
   lightUpDiv(pos) {
     const hexDiv = document.querySelectorAll(".hex_div")[pos];
@@ -386,8 +423,18 @@ export default class Palette extends Component {
         <div className="palette_main">
           <div className="actions_div">
             <button>My List</button>
-            <button onClick={() => this.generate()}>Generate Colors</button>
-            <button>Save Palette</button>
+            <button onClick={() => this.generate()} className="generate_btn">
+              Generate Colors
+            </button>
+            <button
+              onClick={() => {
+                this.setState({
+                  savedPressed: true,
+                });
+              }}
+            >
+              Save Palette
+            </button>
           </div>
 
           <div className="palette_main_div">
@@ -395,6 +442,9 @@ export default class Palette extends Component {
 
             {/* show copied msg */}
             {this.state.isCopied ? <ShowCopiedMsg /> : null}
+
+            {/* show saved option */}
+            {this.state.savedPressed ? this.ShowSavedPanel() : null}
 
             {/* 0  */}
             <div className="hex_div">
