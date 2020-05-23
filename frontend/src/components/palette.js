@@ -117,7 +117,8 @@ export default class Palette extends Component {
     // hue color
     hues[
       pos
-    ].style.backgroundImage = `linear-gradient(to right, rgb(255, 0, 0), rgb(255,255 ,0),rgb(0, 255, 0),rgb(0, 255, 255),rgb(0,0,255),rgb(255,0,255),rgb(255,0,0))`;
+    ].style.backgroundImage = `linear-gradient(to right, rgb(255, 0, 0), rgb(255,255 ,0), rgb(0, 255, 0), rgb(0, 255, 255),
+     rgb(0,0,255), rgb(255,0,255), rgb(255,0,0))`;
 
     // get chroma brightness of current color
     const lowBrightness = color.set("hsl.l", 0);
@@ -145,6 +146,32 @@ export default class Palette extends Component {
     )}, ${saturationScale(1)})`;
   }
 
+  // adjust div hue, brightness and saturation inputs
+  inputActions(pos, hexCode) {
+    // remove the # from hex code
+    let hex = hexCode.substr(1);
+    const colors = document.querySelectorAll(".color");
+
+    // all 3 inputs from current div
+    const inputs = document
+      .querySelectorAll(".adjust_div")
+      [pos].querySelectorAll("input");
+
+    for (let i = 0; i < inputs.length; i++) {
+      inputs[i].addEventListener("input", (e) => {
+        let color = chroma(hex)
+          .set("hsl.h", inputs[0].value)
+          .set("hsl.l", inputs[1].value)
+          .set("hsl.s", inputs[2].value);
+
+        console.log(color);
+
+        // update current background
+        colors[pos].style.backgroundColor = color;
+      });
+    }
+  }
+
   // random hex code generator
   generate() {
     const colors = document.querySelectorAll(".color");
@@ -166,6 +193,7 @@ export default class Palette extends Component {
         colors[k].style.backgroundColor = hex;
         colorCodes[k].textContent = hex;
         this.fillAdjust(k, hex);
+        this.inputActions(k, hex);
       }
       // re-initiate value
       hex = "#";
