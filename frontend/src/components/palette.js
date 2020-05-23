@@ -26,6 +26,7 @@ export default class Palette extends Component {
       NB_ITEMS: 4,
       isCopied: false,
       savedPressed: false,
+      isSaved: false,
       islocked: [false, false, false, false],
       imgArray: [unlock, unlock, unlock, unlock],
     };
@@ -41,6 +42,8 @@ export default class Palette extends Component {
         // document.querySelector(".navlink_palette").textContent =
         //   data[0].username + "'s Palette";
       });
+
+    this.savePalette = this.savePalette.bind(this);
   }
 
   // when DOM loads up
@@ -243,6 +246,54 @@ export default class Palette extends Component {
     }
   }
 
+  savePalette() {
+    const generateBtn = document.querySelector(".generate_btn");
+    const name = document.querySelector(".save_input");
+
+    // empty input
+    if (name.value === "") {
+      name.classList.add("shine_red_border");
+
+      setTimeout(() => {
+        name.classList.remove("shine_red_border");
+      }, 2000);
+    } else {
+      document.querySelector(".saveDiv").classList.add("close_saveDiv");
+
+      setTimeout(() => {
+        this.setState({
+          savedPressed: false,
+          isSaved: true,
+        });
+      }, 1200);
+
+      // turn on btn
+      generateBtn.disabled = false;
+      generateBtn.style.opacity = "1";
+    }
+  }
+
+  // show saved message
+  ShowSavedMsg() {
+    // close saved msg
+    setTimeout(() => {
+      document.querySelector(".savedMsg").classList.add("close_saved_msg");
+    }, 1500);
+
+    // switch state
+    setTimeout(() => {
+      this.setState({
+        isSaved: false,
+      });
+    }, 3500);
+
+    return (
+      <div className="savedMsg">
+        <p>Saved!</p>
+      </div>
+    );
+  }
+
   // panel shown when user saves palette
   ShowSavedPanel() {
     const generateBtn = document.querySelector(".generate_btn");
@@ -255,7 +306,12 @@ export default class Palette extends Component {
       <div className="saveDiv">
         <p>Name your palette: </p>
         <input type="text" className="save_input" spellCheck="false"></input>
-        <input type="submit" className="save_btn" value="Save"></input>
+        <input
+          type="submit"
+          className="save_btn"
+          value="Save"
+          onClick={this.savePalette}
+        ></input>
         <button
           className="save_btn"
           onClick={() => {
@@ -442,6 +498,9 @@ export default class Palette extends Component {
 
             {/* show copied msg */}
             {this.state.isCopied ? <ShowCopiedMsg /> : null}
+
+            {/* show saved msg */}
+            {this.state.isSaved ? this.ShowSavedMsg() : null}
 
             {/* show saved option */}
             {this.state.savedPressed ? this.ShowSavedPanel() : null}
