@@ -8,6 +8,14 @@ import "./navbar.css";
 import chroma from "chroma-js";
 import * as clipboard from "clipboard-polyfill/dist/clipboard-polyfill.promise";
 
+const ShowCopiedMsg = () => {
+  return (
+    <div className="hexCopied">
+      <p>Hex code copied</p>
+    </div>
+  );
+};
+
 export default class Palette extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +23,7 @@ export default class Palette extends Component {
     this.state = {
       id: this.props.match.params.id,
       NB_ITEMS: 4,
+      isCopied: false,
       islocked: [false, false, false, false],
       imgArray: [unlock, unlock, unlock, unlock],
     };
@@ -230,11 +239,16 @@ export default class Palette extends Component {
   // illuminate current div
   lightUpDiv(pos) {
     const hexDiv = document.querySelectorAll(".hex_div")[pos];
-
     hexDiv.classList.add("shine_border");
+    this.setState({
+      isCopied: true,
+    });
 
     setTimeout(() => {
       hexDiv.classList.remove("shine_border");
+      this.setState({
+        isCopied: false,
+      });
     }, 2000);
   }
 
@@ -374,6 +388,9 @@ export default class Palette extends Component {
           <div className="palette_main_div">
             <div className="opacity"></div>
 
+            {/* show copied msg */}
+            {this.state.isCopied ? <ShowCopiedMsg /> : null}
+
             {/* 0  */}
             <div className="hex_div">
               <div className="adjust_div open_right">
@@ -431,7 +448,6 @@ export default class Palette extends Component {
                 <h1>#123456</h1>
               </div>
             </div>
-
             {/* 1 */}
             <div className="hex_div">
               <div className="adjust_div open_right">
@@ -489,7 +505,6 @@ export default class Palette extends Component {
                 <h1>#123456</h1>
               </div>
             </div>
-
             {/* 2 */}
             <div className="hex_div">
               <div className="adjust_div open_left">
@@ -547,7 +562,6 @@ export default class Palette extends Component {
                 <h1>#123456</h1>
               </div>
             </div>
-
             {/* 3 */}
             <div className="hex_div">
               <div className="adjust_div open_left">

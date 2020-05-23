@@ -19,6 +19,6 @@ nodemon server.js (to start the server)
 
 ```bash
 npm init (to set up node_modules)
-npm install chroma-js
+npm install chroma-js clipboard-polyfill
 npm start (to run the application)
 ```
