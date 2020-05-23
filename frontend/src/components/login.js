@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import loading from "../assets/loading.gif";
+import logo from "../assets/logo.png";
 import "../App.css";
 
 function displayMsg(div, msgElement, msg) {
@@ -108,7 +109,7 @@ export default class Login extends Component {
     return (
       <div className="parent">
         <div className="rd-div">
-          <img src="./logo.png" alt="" />
+          <img src={logo} alt="" />
         </div>
 
         <div className="login_child">

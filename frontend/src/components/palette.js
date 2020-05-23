@@ -152,11 +152,12 @@ export default class Palette extends Component {
     let hex = hexCode.substr(1);
     const colors = document.querySelectorAll(".color");
 
-    // all 3 inputs from current div
+    // all 3 inputs from current hex div
     const inputs = document
       .querySelectorAll(".adjust_div")
       [pos].querySelectorAll("input");
 
+    // dragging state
     for (let i = 0; i < inputs.length; i++) {
       inputs[i].addEventListener("input", (e) => {
         let color = chroma(hex)
@@ -164,11 +165,63 @@ export default class Palette extends Component {
           .set("hsl.l", inputs[1].value)
           .set("hsl.s", inputs[2].value);
 
-        console.log(color);
-
-        // update current background
+        // update current background color of main div and inputs
         colors[pos].style.backgroundColor = color;
+        this.fillAdjust(pos, "#" + color);
       });
+    }
+
+    // released state
+    for (let i = 0; i < inputs.length; i++) {
+      inputs[i].addEventListener("change", (e) => {
+        // retrieve background color
+        const color = chroma(colors[pos].style.backgroundColor);
+        const hex = document.querySelectorAll(".code_div h1")[pos];
+        hex.textContent = color.hex().toUpperCase();
+      });
+    }
+  }
+
+  //
+  setInputRange() {
+    // get all 12 inputs
+    const inputs = document.querySelectorAll(".adjust_div input");
+
+    // get all 4 hex div
+    const colors = document.querySelectorAll(".color");
+
+    // target colors of specific input
+    /*
+    hsl(): 
+      0 equals hue
+      1 equals sat
+      2 equals brightness
+    */
+    let colorIndex = 0;
+    for (let i = 0; i < inputs.length; i++) {
+      // hue inputs
+      if (i % 3 === 0) {
+        const hue = colors[colorIndex].style.backgroundColor;
+        const hueValue = chroma(hue).hsl()[0];
+        inputs[i].value = Math.floor(hueValue);
+      }
+
+      // brightness inputs
+      else if (i % 3 === 1) {
+        const brightness = colors[colorIndex].style.backgroundColor;
+        const brightnessValue = chroma(brightness).hsl()[2];
+        inputs[i].value = Math.floor(brightnessValue * 100) / 100;
+      }
+
+      // saturation
+      else if (i % 3 === 2) {
+        const sat = colors[colorIndex].style.backgroundColor;
+        const satValue = chroma(sat).hsl()[1];
+        inputs[i].value = Math.floor(satValue * 100) / 100;
+
+        // update index to target next div
+        colorIndex++;
+      }
     }
   }
 
@@ -198,6 +251,9 @@ export default class Palette extends Component {
       // re-initiate value
       hex = "#";
     }
+
+    // update inputs
+    this.setInputRange();
   }
 
   toggleLock(pos) {
