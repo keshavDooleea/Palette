@@ -178,6 +178,11 @@ export default class Palette extends Component {
 
         // update current background color of main div and inputs
         colors[pos].style.backgroundColor = color;
+
+        // update hexa code on the div
+        const hexa = document.querySelectorAll(".code_div h1")[pos];
+        hexa.textContent = color.hex().toUpperCase();
+
         this.assignInputColor(pos, "#" + color);
       });
     }
