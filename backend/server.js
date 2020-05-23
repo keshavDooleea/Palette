@@ -94,4 +94,8 @@ app.post("/register", (req, res) => {
   });
 });
 
+app.post("/palette/:id", (req, res) => {
+  console.log(req.body);
+});
+
 app.listen(5000, () => console.log("listening on port 5000"));

@@ -257,7 +257,31 @@ export default class Palette extends Component {
       setTimeout(() => {
         name.classList.remove("shine_red_border");
       }, 2000);
-    } else {
+    }
+
+    // save palette
+    else {
+      const hexCodes = document.querySelectorAll(".code_div h1");
+      let codeArray = [];
+
+      // retrieve hex codes
+      for (let i = 0; i < hexCodes.length; i++) {
+        codeArray.push(hexCodes[i].textContent);
+      }
+
+      // send data to server
+      fetch(`http://localhost:5000/palette/${this.state.id}`, {
+        method: "POST",
+        body: JSON.stringify(codeArray),
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        });
+
       document.querySelector(".saveDiv").classList.add("close_saveDiv");
 
       setTimeout(() => {
@@ -271,27 +295,6 @@ export default class Palette extends Component {
       generateBtn.disabled = false;
       generateBtn.style.opacity = "1";
     }
-  }
-
-  // show saved message
-  ShowSavedMsg() {
-    // close saved msg
-    setTimeout(() => {
-      document.querySelector(".savedMsg").classList.add("close_saved_msg");
-    }, 1500);
-
-    // switch state
-    setTimeout(() => {
-      this.setState({
-        isSaved: false,
-      });
-    }, 3500);
-
-    return (
-      <div className="savedMsg">
-        <p>Saved!</p>
-      </div>
-    );
   }
 
   // panel shown when user saves palette
@@ -330,6 +333,27 @@ export default class Palette extends Component {
         >
           Cancel
         </button>
+      </div>
+    );
+  }
+
+  // show saved message
+  ShowSavedMsg() {
+    // close saved msg
+    setTimeout(() => {
+      document.querySelector(".savedMsg").classList.add("close_saved_msg");
+    }, 1500);
+
+    // switch state
+    setTimeout(() => {
+      this.setState({
+        isSaved: false,
+      });
+    }, 3500);
+
+    return (
+      <div className="savedMsg">
+        <p>Saved!</p>
       </div>
     );
   }
