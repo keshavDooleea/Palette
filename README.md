@@ -19,5 +19,6 @@ nodemon server.js (to start the server)
 
 ```bash
 npm init (to set up node_modules)
+npm install chroma-js
 npm start (to run the application)
 ```
