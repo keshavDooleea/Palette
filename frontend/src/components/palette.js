@@ -6,6 +6,7 @@ import adjust from "../assets/adjust.png";
 import "./palette.css";
 import "./navbar.css";
 import chroma from "chroma-js";
+import * as clipboard from "clipboard-polyfill/dist/clipboard-polyfill.promise";
 
 export default class Palette extends Component {
   constructor(props) {
@@ -34,6 +35,7 @@ export default class Palette extends Component {
   // when DOM loads up
   componentDidMount() {
     this.generate();
+    this.copyToClipboard();
   }
 
   adjust(pos) {
@@ -102,7 +104,7 @@ export default class Palette extends Component {
       [pos].classList.add("close_adjust_div");
   }
 
-  fillAdjust(pos, hexCode) {
+  assignInputColor(pos, hexCode) {
     // remove the # from hex code
     let hex = hexCode.substr(1);
 
@@ -167,7 +169,7 @@ export default class Palette extends Component {
 
         // update current background color of main div and inputs
         colors[pos].style.backgroundColor = color;
-        this.fillAdjust(pos, "#" + color);
+        this.assignInputColor(pos, "#" + color);
       });
     }
 
@@ -182,7 +184,7 @@ export default class Palette extends Component {
     }
   }
 
-  //
+  // update color of each inputs while dragging
   setInputRange() {
     // get all 12 inputs
     const inputs = document.querySelectorAll(".adjust_div input");
@@ -225,6 +227,41 @@ export default class Palette extends Component {
     }
   }
 
+  // illuminate current div
+  lightUpDiv(pos) {
+    const hexDiv = document.querySelectorAll(".hex_div")[pos];
+
+    hexDiv.classList.add("shine_border");
+
+    setTimeout(() => {
+      hexDiv.classList.remove("shine_border");
+    }, 2000);
+  }
+
+  // copy to clipboard feature
+  copyToClipboard() {
+    const hexCode = document.querySelectorAll(".code_div h1");
+    const colors = document.querySelectorAll(".color");
+
+    for (let i = 0; i < hexCode.length; i++) {
+      // getting corresponding hexcode when clicked upon the hex code
+      hexCode[i].addEventListener("click", (e) => {
+        clipboard.writeText(e.target.textContent);
+        this.lightUpDiv(i);
+      });
+
+      // when clicked on the div itself
+      colors[i].addEventListener("click", (e) => {
+        // selecting only parent node
+        if (colors[i] !== e.target) return;
+
+        const color = e.target.parentElement.querySelectorAll(".code_div h1");
+        clipboard.writeText(color[0].textContent);
+        this.lightUpDiv(i);
+      });
+    }
+  }
+
   // random hex code generator
   generate() {
     const colors = document.querySelectorAll(".color");
@@ -245,7 +282,7 @@ export default class Palette extends Component {
         // set up div colors
         colors[k].style.backgroundColor = hex;
         colorCodes[k].textContent = hex;
-        this.fillAdjust(k, hex);
+        this.assignInputColor(k, hex);
         this.inputActions(k, hex);
       }
       // re-initiate value

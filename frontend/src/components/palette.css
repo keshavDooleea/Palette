@@ -89,6 +89,7 @@
   width: 92%;
   height: 80%;
   margin-top: 7px;
+  cursor: pointer;
   background-color: rosybrown;
   display: flex;
   flex-direction: column;
@@ -236,4 +237,9 @@
   background-color: rosybrown;
   opacity: 0.6;
   transform: translate(-25%, 25%);
+}
+
+.shine_border {
+  border: 2px solid #64c98b;
+  box-shadow: 0px 0px 4px #64c98b, 0px 0px 7px #64c98b, 0px 0px 10px #64c98b;
 }
