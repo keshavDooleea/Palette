@@ -27,6 +27,7 @@ export default class Palette extends Component {
       isCopied: false,
       savedPressed: false,
       isSaved: false,
+      isListClicked: false,
       islocked: [false, false, false, false],
       imgArray: [unlock, unlock, unlock, unlock],
       savedMsg: "",
@@ -512,6 +513,33 @@ export default class Palette extends Component {
     console.log(this.state.islocked);
   }
 
+  showList() {
+    console.log("OPEN");
+
+    return (
+      <div className="list_div">
+        <div className="list_header">
+          <h1>My Palettes</h1>
+        </div>
+
+        <h1
+          className="close_list"
+          onClick={() => {
+            document.querySelector(".list_div").classList.add("close_list_div");
+
+            setTimeout(() => {
+              this.setState({
+                isListClicked: false,
+              });
+            }, 1500);
+          }}
+        >
+          X
+        </h1>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="palette">
@@ -559,8 +587,20 @@ export default class Palette extends Component {
         </nav>
 
         <div className="palette_main">
+          {/* show lists */}
+          {this.state.isListClicked ? this.showList() : null}
+
           <div className="actions_div">
-            <button className="list_btn">My List</button>
+            <button
+              className="list_btn"
+              onClick={() => {
+                this.setState({
+                  isListClicked: true,
+                });
+              }}
+            >
+              My List
+            </button>
             <button onClick={() => this.generate()} className="generate_btn">
               Generate Colors
             </button>

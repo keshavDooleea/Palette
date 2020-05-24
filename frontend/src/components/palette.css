@@ -76,6 +76,66 @@
   position: relative;
 }
 
+.list_div {
+  width: 75%;
+  height: 80%;
+  display: grid;
+  grid-template-rows: 15% 85%;
+  z-index: 2;
+  position: absolute;
+  background-color: #f4f3ef;
+  border: 2px solid #888;
+  transform: translateY(-130%);
+  animation: slide-down 2s cubic-bezier(0.64, -0.16, 0.36, 1.56) forwards;
+}
+
+@keyframes slide-down {
+  0% {
+    transform: translateY(-130%);
+  }
+
+  80%,
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.close_list_div {
+  animation: slide-up 2s cubic-bezier(0.64, -0.56, 0.36, 1.56) forwards;
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(0%);
+  }
+
+  80%,
+  100% {
+    transform: translateY(-150%);
+  }
+}
+
+.close_list {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  font-family: manus;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.list_header {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.list_header h1 {
+  pointer-events: none;
+}
+
 .hexCopied {
   position: absolute;
   top: -30px;
@@ -274,16 +334,22 @@
   position: absolute;
   top: 0;
   right: 10px;
+  font-family: manus;
+  font-size: 30px;
   cursor: pointer;
   color: #5d5858;
+  transform: translateY(-25%);
 }
 
 .open_left .close_adjust {
   position: absolute;
   top: 0;
   left: 10px;
+  font-family: manus;
+  font-size: 30px;
   color: #5d5858;
   cursor: pointer;
+  transform: translateY(-25%);
 }
 
 .lock_adjust {
