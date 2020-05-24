@@ -95,7 +95,29 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/palette/:id", (req, res) => {
-  console.log(req.body);
+  // retrieve info
+  const body = {
+    hexArray: req.body.codeArray,
+    name: req.body.name,
+  };
+
+  // find user and push palette
+  User.findById(req.params.id, (err, user) => {
+    if (user != null) {
+      // verify if name exists
+      for (let i = 0; i < user.palette.length; i++) {
+        if (user.palette[i].name == body.name) {
+          res.json("exists");
+          return;
+        }
+      }
+
+      // if reached here, it means the name doesn't not exist
+      user.palette.push(body);
+      user.save();
+      res.json("success");
+    }
+  });
 });
 
 app.listen(5000, () => console.log("listening on port 5000"));

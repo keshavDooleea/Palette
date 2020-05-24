@@ -17,6 +17,16 @@ const userSchema = new mongo.Schema({
     type: Date,
     default: Date.now,
   },
+  palette: [
+    {
+      hexArray: { type: Array },
+      name: { type: String },
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
 });
 
 var User = mongo.model("User", userSchema);

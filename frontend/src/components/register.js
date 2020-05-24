@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import back from "../assets/back.png";
 import loading from "../assets/loading.gif";
+import logo from "../assets/logo.png";
 import "../App.css";
 
 function displayMsg(div, msgElement, msg) {
@@ -104,7 +105,7 @@ export default class Register extends Component {
     return (
       <div className="register_parent">
         <div className="rd-register-div">
-          <img src="./logo.png" alt="" />
+          <img src={logo} alt="" />
         </div>
 
         <div className="register_child">

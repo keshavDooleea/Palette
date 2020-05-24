@@ -29,19 +29,21 @@ export default class Palette extends Component {
       isSaved: false,
       islocked: [false, false, false, false],
       imgArray: [unlock, unlock, unlock, unlock],
+      savedMsg: "",
+      savedColor: "",
     };
 
-    fetch(`http://localhost:5000/palette/${this.state.id}`, {
-      method: "GET",
-      headers: {
-        "content-type": "application/JSON",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // document.querySelector(".navlink_palette").textContent =
-        //   data[0].username + "'s Palette";
-      });
+    // fetch(`http://localhost:5000/palette/${this.state.id}`, {
+    //   method: "GET",
+    //   headers: {
+    //     "content-type": "application/JSON",
+    //   },
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     // document.querySelector(".navlink_palette").textContent =
+    //     //   data[0].username + "'s Palette";
+    //   });
 
     this.savePalette = this.savePalette.bind(this);
   }
@@ -262,6 +264,9 @@ export default class Palette extends Component {
     // save palette
     else {
       const hexCodes = document.querySelectorAll(".code_div h1");
+      const paletteName = document.querySelector(".save_input");
+      let msg;
+      let color;
       let codeArray = [];
 
       // retrieve hex codes
@@ -269,17 +274,33 @@ export default class Palette extends Component {
         codeArray.push(hexCodes[i].textContent);
       }
 
+      // data to be sent
+      const data = {
+        codeArray,
+        name: paletteName.value,
+      };
+
       // send data to server
       fetch(`http://localhost:5000/palette/${this.state.id}`, {
         method: "POST",
-        body: JSON.stringify(codeArray),
+        body: JSON.stringify(data),
         headers: {
           "content-type": "application/json",
         },
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          // palette name already exists
+          if (data === "exists") {
+            msg = "Palette's name already exists";
+            color = "rgb(189, 76, 76)";
+          }
+
+          // saved successfully
+          if (data === "success") {
+            msg = "Palette saved";
+            color = "rgb(64, 122, 64)";
+          }
         });
 
       document.querySelector(".saveDiv").classList.add("close_saveDiv");
@@ -288,6 +309,8 @@ export default class Palette extends Component {
         this.setState({
           savedPressed: false,
           isSaved: true,
+          savedMsg: msg,
+          savedColor: color,
         });
       }, 1200);
 
@@ -337,12 +360,16 @@ export default class Palette extends Component {
     );
   }
 
+  closeDivMsg() {
+    document.querySelector(".savedMsg").classList.add("close_saved_msg");
+  }
+
   // show saved message
   ShowSavedMsg() {
     // close saved msg
     setTimeout(() => {
-      document.querySelector(".savedMsg").classList.add("close_saved_msg");
-    }, 1500);
+      this.closeDivMsg();
+    }, 2500);
 
     // switch state
     setTimeout(() => {
@@ -353,7 +380,9 @@ export default class Palette extends Component {
 
     return (
       <div className="savedMsg">
-        <p>Saved!</p>
+        <p style={{ color: `${this.state.savedColor}` }}>
+          {this.state.savedMsg}
+        </p>
       </div>
     );
   }
