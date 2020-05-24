@@ -82,12 +82,12 @@ export default class Login extends Component {
         loadingGif.style.display = "none";
 
         // user does not exist
-        if (data.message === "not_exists") {
+        if (data === "not_exists") {
           displayMsg(errorMsgDiv, errorMsg, "Username incorrect!");
         }
 
         // wrong password
-        else if (data.message === "password_invalid") {
+        else if (data === "password_invalid") {
           displayMsg(errorMsgDiv, errorMsg, "Wrong password!");
         }
 
