@@ -250,6 +250,7 @@ export default class Palette extends Component {
 
   savePalette() {
     const generateBtn = document.querySelector(".generate_btn");
+    const div = document.querySelectorAll(".hex_div");
     const name = document.querySelector(".save_input");
 
     // empty input
@@ -317,16 +318,27 @@ export default class Palette extends Component {
       // turn on btn
       generateBtn.disabled = false;
       generateBtn.style.opacity = "1";
+
+      // enable div
+      for (let i = 0; i < div.length; i++) {
+        div[i].classList.remove("disabledDiv");
+      }
     }
   }
 
   // panel shown when user saves palette
   ShowSavedPanel() {
     const generateBtn = document.querySelector(".generate_btn");
+    const div = document.querySelectorAll(".hex_div");
 
     // turn off btn
     generateBtn.disabled = true;
     generateBtn.style.opacity = "0.3";
+
+    // disable div
+    for (let i = 0; i < div.length; i++) {
+      div[i].classList.add("disabledDiv");
+    }
 
     return (
       <div className="saveDiv">
@@ -345,6 +357,11 @@ export default class Palette extends Component {
             // turn on btn
             generateBtn.disabled = false;
             generateBtn.style.opacity = "1";
+
+            // enable div
+            for (let i = 0; i < div.length; i++) {
+              div[i].classList.remove("disabledDiv");
+            }
 
             // wait for animation
             setTimeout(() => {

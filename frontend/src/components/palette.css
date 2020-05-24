@@ -127,8 +127,6 @@
   justify-content: space-around;
   font-family: manus;
   font-size: 25px;
-  transform-origin: left;
-  transform: scaleX(0);
   animation: slide-in 1s ease-in-out forwards;
 }
 
@@ -144,7 +142,6 @@
 
 .close_saveDiv,
 .close_saved_msg {
-  transform-origin: right;
   transform: scaleX(1);
   animation: slide-out 1s ease-in-out forwards;
 }
@@ -192,6 +189,10 @@
 
 .save_btn:active {
   box-shadow: inset -4px -4px 20px #d2d1ce, inset 3px 3px 7px #ffffff;
+}
+
+.disabledDiv {
+  pointer-events: none;
 }
 
 .hex_div {
