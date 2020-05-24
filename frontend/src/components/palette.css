@@ -122,6 +122,7 @@
   font-family: manus;
   font-size: 30px;
   cursor: pointer;
+  color: #888;
 }
 
 .list_header {
@@ -133,6 +134,8 @@
 }
 
 .list_header h1 {
+  color: #888;
+  font-size: 30px;
   pointer-events: none;
 }
 

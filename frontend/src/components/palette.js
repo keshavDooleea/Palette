@@ -27,6 +27,7 @@ export default class Palette extends Component {
       isCopied: false,
       savedPressed: false,
       isSaved: false,
+      isMsgCopiedShown: false,
       isListClicked: false,
       islocked: [false, false, false, false],
       imgArray: [unlock, unlock, unlock, unlock],
@@ -394,12 +395,15 @@ export default class Palette extends Component {
   ShowSavedMsg() {
     // close saved msg
     setTimeout(() => {
-      this.closeDivMsg();
+      this.setState({
+        isMsgCopiedShown: true,
+      });
     }, 2500);
 
     // switch state
     setTimeout(() => {
       this.setState({
+        isMsgCopiedShown: false,
         isSaved: false,
       });
     }, 3500);
@@ -409,6 +413,8 @@ export default class Palette extends Component {
         <p style={{ color: `${this.state.savedColor}` }}>
           {this.state.savedMsg}
         </p>
+
+        {this.state.isMsgCopiedShown ? this.closeDivMsg() : null}
       </div>
     );
   }
@@ -525,12 +531,9 @@ export default class Palette extends Component {
     this.setState({
       imgArray: newImgArray,
     });
-    console.log(this.state.islocked);
   }
 
   showList() {
-    console.log("OPEN");
-
     return (
       <div className="list_div">
         <div className="list_header">
