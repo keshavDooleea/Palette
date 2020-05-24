@@ -124,4 +124,20 @@ app.post("/palette/:id", (req, res) => {
   });
 });
 
+// delete specific palette
+app.delete("/palette/:id/:paletteId", (req, res) => {
+  User.findById(req.params.id, async (err, user) => {
+    for (let i = 0; i < user.palette.length; i++) {
+      // palette found
+      if (user.palette[i]._id == req.params.paletteId) {
+        // delete palette
+        user.palette.remove(user.palette[i]._id);
+        user.save(() => {
+          res.json("deleted");
+        });
+      }
+    }
+  });
+});
+
 app.listen(5000, () => console.log("listening on port 5000"));

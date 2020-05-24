@@ -548,6 +548,23 @@ export default class Palette extends Component {
     this.closeList();
   }
 
+  // delete corresponding div and send back to server
+  deleteListOnDiv(e) {
+    const paletteId = e.target.parentElement.parentElement.getAttribute(
+      "data-key"
+    );
+
+    // post to server
+    fetch(`http://localhost:5000/palette/${this.state.id}/${paletteId}`, {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {});
+  }
+
   // when user doesnt have any palette saved yet
   emptyList() {
     return (
@@ -564,7 +581,7 @@ export default class Palette extends Component {
     return (
       <div className="data_list">
         {palettes.map((item) => (
-          <div key={item._id} className="data_list_item">
+          <div key={item._id} data-key={item._id} className="data_list_item">
             <div className="data_list_name">
               <h1 key={item.name}>{item.name}</h1>
               <small key={item.date}>
@@ -591,7 +608,12 @@ export default class Palette extends Component {
               >
                 Load
               </button>
-              <button className="delete_list">Delete</button>
+              <button
+                className="delete_list"
+                onClick={(e) => this.deleteListOnDiv(e)}
+              >
+                Delete
+              </button>
             </div>
           </div>
         ))}
