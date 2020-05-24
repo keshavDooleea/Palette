@@ -384,6 +384,9 @@ export default class Palette extends Component {
 
   // show saved message
   ShowSavedMsg() {
+    const generateBtn = document.querySelector(".generate_btn");
+    const listBtn = document.querySelector(".list_btn");
+
     // close saved msg
     setTimeout(() => {
       this.setState({
@@ -398,6 +401,11 @@ export default class Palette extends Component {
         isSaved: false,
       });
     }, 3500);
+
+    generateBtn.disabled = false;
+    listBtn.disabled = false;
+    generateBtn.style.opacity = "1";
+    listBtn.style.opacity = "1";
 
     return (
       <div className="hexCopied">
@@ -548,7 +556,7 @@ export default class Palette extends Component {
               </small>
             </div>
             <div className="round_items">
-              <span>
+              <span className="list_parent_span">
                 {item.hexArray.map((color) => (
                   <span
                     className="list_color_span"
