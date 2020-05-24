@@ -272,6 +272,11 @@
   box-shadow: 1px 1px 5px rgb(206, 170, 170), -5px -5px 13px #ffffff;
 }
 
+.load_list:active,
+.delete_list:active {
+  box-shadow: inset -4px -4px 20px #d2d1ce, inset 3px 3px 7px #ffffff;
+}
+
 .hexCopied {
   position: absolute;
   top: -30px;

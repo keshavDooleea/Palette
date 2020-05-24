@@ -532,6 +532,22 @@ export default class Palette extends Component {
     });
   }
 
+  // load colors on list onto divs
+  loadListOnDiv(e) {
+    const divs = document.querySelectorAll(".color");
+    const colors = e.target.parentElement.parentElement.querySelectorAll(
+      ".list_color_span"
+    );
+
+    // update divs background
+    for (let i = 0; i < colors.length; i++) {
+      divs[i].style.backgroundColor = colors[i].style.backgroundColor;
+    }
+
+    // close background
+    this.closeList();
+  }
+
   // when user doesnt have any palette saved yet
   emptyList() {
     return (
@@ -569,7 +585,12 @@ export default class Palette extends Component {
               </span>
             </div>
             <div className="button_items">
-              <button className="load_list">Load</button>
+              <button
+                className="load_list"
+                onClick={(e) => this.loadListOnDiv(e)}
+              >
+                Load
+              </button>
               <button className="delete_list">Delete</button>
             </div>
           </div>
