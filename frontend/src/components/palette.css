@@ -249,6 +249,29 @@
   box-shadow: 5px 5px 13px #e3e3e3, -5px -5px 13px #ffffff;
 }
 
+.load_list,
+.delete_list {
+  width: 40%;
+  height: 50%;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: "Josefin Sans", sans-serif;
+}
+
+.load_list {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 5px 5px 13px #e3e3e3, -5px -5px 13px #ffffff;
+}
+
+.delete_list {
+  color: #fff;
+  background-color: rosybrown;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px rgb(206, 170, 170), -5px -5px 13px #ffffff;
+}
+
 .hexCopied {
   position: absolute;
   top: -30px;

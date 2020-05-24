@@ -569,8 +569,8 @@ export default class Palette extends Component {
               </span>
             </div>
             <div className="button_items">
-              <button>Load</button>
-              <button>Delete</button>
+              <button className="load_list">Load</button>
+              <button className="delete_list">Delete</button>
             </div>
           </div>
         ))}
