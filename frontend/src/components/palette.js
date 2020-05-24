@@ -415,22 +415,37 @@ export default class Palette extends Component {
 
   // illuminate current div
   lightUpDiv(pos) {
-    const hexDiv = document.querySelectorAll(".hex_div")[pos];
-    hexDiv.classList.add("shine_border");
-    this.setState({
-      isCopied: true,
-    });
+    const hexDiv = document.querySelectorAll(".hex_div");
 
-    setTimeout(() => {
-      document.querySelector(".hexCopied").classList.add("remove_hexCopied");
-      hexDiv.classList.remove("shine_border");
-    }, 2000);
+    for (let i = 0; i < hexDiv.length; i++) {
+      if (i === pos) {
+        hexDiv[[i]].classList.add("shine_border");
+        this.setState({
+          isCopied: true,
+        });
 
-    setTimeout(() => {
-      this.setState({
-        isCopied: false,
-      });
-    }, 2200);
+        setTimeout(() => {
+          document
+            .querySelector(".hexCopied")
+            .classList.add("remove_hexCopied");
+          hexDiv[i].classList.remove("shine_border");
+
+          // enable other divs
+          for (let j = 0; j < hexDiv.length; j++) {
+            hexDiv[j].classList.remove("disabledDiv");
+          }
+        }, 2000);
+
+        setTimeout(() => {
+          this.setState({
+            isCopied: false,
+          });
+        }, 2200);
+      }
+
+      // disable other divs
+      hexDiv[i].classList.add("disabledDiv");
+    }
   }
 
   // copy to clipboard feature
