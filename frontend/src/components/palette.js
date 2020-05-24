@@ -396,11 +396,15 @@ export default class Palette extends Component {
     });
 
     setTimeout(() => {
+      document.querySelector(".hexCopied").classList.add("remove_hexCopied");
       hexDiv.classList.remove("shine_border");
+    }, 2000);
+
+    setTimeout(() => {
       this.setState({
         isCopied: false,
       });
-    }, 2000);
+    }, 2200);
   }
 
   // copy to clipboard feature
