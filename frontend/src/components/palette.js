@@ -378,7 +378,7 @@ export default class Palette extends Component {
   }
 
   closeDivMsg() {
-    document.querySelector(".savedMsg").classList.add("close_saved_msg");
+    document.querySelector(".hexCopied").classList.add("remove_hexCopied");
   }
 
   // show saved message
@@ -396,7 +396,7 @@ export default class Palette extends Component {
     }, 3500);
 
     return (
-      <div className="savedMsg">
+      <div className="hexCopied">
         <p style={{ color: `${this.state.savedColor}` }}>
           {this.state.savedMsg}
         </p>
