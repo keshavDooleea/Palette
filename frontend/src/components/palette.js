@@ -645,7 +645,7 @@ export default class Palette extends Component {
       .then((res) => res.json())
       .then((data) => {
         this.setState({
-          paletteData: data.data[0].palette,
+          paletteData: data[0].palette,
         });
       });
 

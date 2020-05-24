@@ -28,9 +28,7 @@ app.get("/palette/:id", async (req, res) => {
     if (err) res.json("error");
 
     if (user != null) {
-      res.json({
-        data: user,
-      });
+      res.send(user);
     }
   });
 });
