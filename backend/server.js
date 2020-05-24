@@ -25,8 +25,12 @@ app.get("/", (req, res) => {
 
 app.get("/palette/:id", async (req, res) => {
   await User.find({ _id: req.params.id }, (err, user) => {
+    if (err) res.json("error");
+
     if (user != null) {
-      res.json(user);
+      res.json({
+        data: user,
+      });
     }
   });
 });

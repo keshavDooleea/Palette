@@ -139,6 +139,11 @@
   pointer-events: none;
 }
 
+.list_main {
+  width: 100%;
+  height: 100%;
+}
+
 .hexCopied {
   position: absolute;
   top: -30px;

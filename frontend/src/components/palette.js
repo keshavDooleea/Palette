@@ -24,6 +24,7 @@ export default class Palette extends Component {
     this.state = {
       id: this.props.match.params.id,
       NB_ITEMS: 4,
+      MAX_TIME: 1,
       isCopied: false,
       savedPressed: false,
       isSaved: false,
@@ -33,21 +34,11 @@ export default class Palette extends Component {
       imgArray: [unlock, unlock, unlock, unlock],
       savedMsg: "",
       savedColor: "",
+      paletteData: [],
     };
 
-    // fetch(`http://localhost:5000/palette/${this.state.id}`, {
-    //   method: "GET",
-    //   headers: {
-    //     "content-type": "application/JSON",
-    //   },
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     // document.querySelector(".navlink_palette").textContent =
-    //     //   data[0].username + "'s Palette";
-    //   });
-
     this.savePalette = this.savePalette.bind(this);
+    this.closeList = this.closeList.bind(this);
   }
 
   // when DOM loads up
@@ -533,27 +524,55 @@ export default class Palette extends Component {
     });
   }
 
+  // close the list div
+  closeList() {
+    document.querySelector(".list_div").classList.add("close_list_div");
+
+    setTimeout(() => {
+      this.setState({
+        isListClicked: false,
+      });
+    }, 1500);
+  }
+
+  // open the list div
+  // this is being rendered twice
   showList() {
+    // fetch data
+    fetch(`http://localhost:5000/palette/${this.state.id}`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/JSON",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (this.state.MAX_TIME === 1) {
+          this.setState({
+            paletteData: data.data[0].palette,
+          });
+
+          // verify if first time
+          if (this.state.paletteData.length === 0) {
+          }
+
+          // update max time so that this is rendered once
+          this.setState({
+            MAX_TIME: 2,
+          });
+        }
+      });
+
     return (
       <div className="list_div">
         <div className="list_header">
           <h1>My Palettes</h1>
         </div>
 
-        <h1
-          className="close_list"
-          onClick={() => {
-            document.querySelector(".list_div").classList.add("close_list_div");
-
-            setTimeout(() => {
-              this.setState({
-                isListClicked: false,
-              });
-            }, 1500);
-          }}
-        >
+        <h1 className="close_list" onClick={this.closeList}>
           X
         </h1>
+        <div className="list_main"></div>
       </div>
     );
   }
