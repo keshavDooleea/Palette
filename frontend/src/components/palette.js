@@ -524,6 +524,15 @@ export default class Palette extends Component {
     });
   }
 
+  // when user doesnt have any palette saved yet
+  emptyList() {
+    return (
+      <div className="empty_list">
+        <p>You don't have any saved palette yet..</p>
+      </div>
+    );
+  }
+
   // close the list div
   closeList() {
     document.querySelector(".list_div").classList.add("close_list_div");
@@ -572,7 +581,9 @@ export default class Palette extends Component {
         <h1 className="close_list" onClick={this.closeList}>
           X
         </h1>
-        <div className="list_main"></div>
+        <div className="list_main">
+          {this.state.paletteData.length ? null : this.emptyList()}
+        </div>
       </div>
     );
   }
