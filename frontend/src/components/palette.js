@@ -7,6 +7,7 @@ import "./palette.css";
 import "./navbar.css";
 import chroma from "chroma-js";
 import * as clipboard from "clipboard-polyfill/dist/clipboard-polyfill.promise";
+import moment from "moment";
 
 // msg shown when user copies hex code
 const ShowCopiedMsg = () => {
@@ -533,6 +534,31 @@ export default class Palette extends Component {
     );
   }
 
+  // when user has more than one saved palette
+  displayList() {
+    const palettes = this.state.paletteData;
+
+    return (
+      <div className="data_list">
+        {palettes.map((item) => (
+          <div key={item._id} className="data_list_item">
+            <div className="data_list_name">
+              <h1 key={item.name}>{item.name}</h1>
+              <small key={item.date}>
+                {moment(item.date).format("DD-MM-YYYY")}
+              </small>
+            </div>
+            <div className="round_items"></div>
+            <div className="button_items">
+              <button>Load</button>
+              <button>Delete</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   // close the list div
   closeList() {
     document.querySelector(".list_div").classList.add("close_list_div");
@@ -582,7 +608,9 @@ export default class Palette extends Component {
           X
         </h1>
         <div className="list_main">
-          {this.state.paletteData.length ? null : this.emptyList()}
+          {this.state.paletteData.length
+            ? this.displayList()
+            : this.emptyList()}
         </div>
       </div>
     );
