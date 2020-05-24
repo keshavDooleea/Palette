@@ -25,7 +25,6 @@ export default class Palette extends Component {
     this.state = {
       id: this.props.match.params.id,
       NB_ITEMS: 4,
-      MAX_TIME: 1,
       isCopied: false,
       savedPressed: false,
       isSaved: false,
@@ -548,7 +547,19 @@ export default class Palette extends Component {
                 {moment(item.date).format("DD-MM-YYYY")}
               </small>
             </div>
-            <div className="round_items"></div>
+            <div className="round_items">
+              <span>
+                {item.hexArray.map((color) => (
+                  <span
+                    className="list_color_span"
+                    key={color}
+                    style={{
+                      backgroundColor: `${color}`,
+                    }}
+                  ></span>
+                ))}
+              </span>
+            </div>
             <div className="button_items">
               <button>Load</button>
               <button>Delete</button>
@@ -582,20 +593,9 @@ export default class Palette extends Component {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (this.state.MAX_TIME === 1) {
-          this.setState({
-            paletteData: data.data[0].palette,
-          });
-
-          // verify if first time
-          if (this.state.paletteData.length === 0) {
-          }
-
-          // update max time so that this is rendered once
-          this.setState({
-            MAX_TIME: 2,
-          });
-        }
+        this.setState({
+          paletteData: data.data[0].palette,
+        });
       });
 
     return (
