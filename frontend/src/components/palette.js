@@ -250,6 +250,7 @@ export default class Palette extends Component {
 
   savePalette() {
     const generateBtn = document.querySelector(".generate_btn");
+    const listBtn = document.querySelector(".list_btn");
     const div = document.querySelectorAll(".hex_div");
     const name = document.querySelector(".save_input");
 
@@ -317,7 +318,9 @@ export default class Palette extends Component {
 
       // turn on btn
       generateBtn.disabled = false;
+      listBtn.disabled = false;
       generateBtn.style.opacity = "1";
+      listBtn.style.opacity = "1";
 
       // enable div
       for (let i = 0; i < div.length; i++) {
@@ -329,11 +332,14 @@ export default class Palette extends Component {
   // panel shown when user saves palette
   ShowSavedPanel() {
     const generateBtn = document.querySelector(".generate_btn");
+    const listBtn = document.querySelector(".list_btn");
     const div = document.querySelectorAll(".hex_div");
 
     // turn off btn
     generateBtn.disabled = true;
+    listBtn.disabled = true;
     generateBtn.style.opacity = "0.3";
+    listBtn.style.opacity = "0.3";
 
     // disable div
     for (let i = 0; i < div.length; i++) {
@@ -356,7 +362,9 @@ export default class Palette extends Component {
             document.querySelector(".saveDiv").classList.add("close_saveDiv");
             // turn on btn
             generateBtn.disabled = false;
+            listBtn.disabled = false;
             generateBtn.style.opacity = "1";
+            listBtn.style.opacity = "1";
 
             // enable div
             for (let i = 0; i < div.length; i++) {
@@ -552,7 +560,7 @@ export default class Palette extends Component {
 
         <div className="palette_main">
           <div className="actions_div">
-            <button>My List</button>
+            <button className="list_btn">My List</button>
             <button onClick={() => this.generate()} className="generate_btn">
               Generate Colors
             </button>
