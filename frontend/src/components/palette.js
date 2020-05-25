@@ -25,6 +25,7 @@ export default class Palette extends Component {
     this.state = {
       id: this.props.match.params.id,
       NB_ITEMS: 4,
+      LIMIT_REQUEST: 1,
       isCopied: false,
       savedPressed: false,
       isSaved: false,
@@ -242,8 +243,6 @@ export default class Palette extends Component {
   }
 
   savePalette() {
-    const generateBtn = document.querySelector(".generate_btn");
-    const listBtn = document.querySelector(".list_btn");
     const div = document.querySelectorAll(".hex_div");
     const name = document.querySelector(".save_input");
 
@@ -306,14 +305,9 @@ export default class Palette extends Component {
           isSaved: true,
           savedMsg: msg,
           savedColor: color,
+          LIMIT_REQUEST: 1,
         });
       }, 1200);
-
-      // turn on btn
-      generateBtn.disabled = false;
-      listBtn.disabled = false;
-      generateBtn.style.opacity = "1";
-      listBtn.style.opacity = "1";
 
       // enable div
       for (let i = 0; i < div.length; i++) {
@@ -544,6 +538,11 @@ export default class Palette extends Component {
       divs[i].style.backgroundColor = colors[i].style.backgroundColor;
     }
 
+    // enable fetch
+    this.setState({
+      LIMIT_REQUEST: 1,
+    });
+
     // close background
     this.closeList();
   }
@@ -553,6 +552,11 @@ export default class Palette extends Component {
     const paletteId = e.target.parentElement.parentElement.getAttribute(
       "data-key"
     );
+
+    // enable fetch
+    this.setState({
+      LIMIT_REQUEST: 1,
+    });
 
     // post to server
     fetch(`http://localhost:5000/palette/${this.state.id}/${paletteId}`, {
@@ -635,19 +639,22 @@ export default class Palette extends Component {
   // open the list div
   // this is being rendered twice
   showList() {
-    // fetch data
-    fetch(`http://localhost:5000/palette/${this.state.id}`, {
-      method: "GET",
-      headers: {
-        "content-type": "application/JSON",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        this.setState({
-          paletteData: data[0].palette,
+    // fetch data only once instead of infinite
+    if (this.state.LIMIT_REQUEST === 1) {
+      fetch(`http://localhost:5000/palette/${this.state.id}`, {
+        method: "GET",
+        headers: {
+          "content-type": "application/JSON",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          this.setState({
+            LIMIT_REQUEST: 2,
+            paletteData: data[0].palette,
+          });
         });
-      });
+    }
 
     return (
       <div className="list_div">

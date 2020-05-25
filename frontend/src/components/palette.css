@@ -188,16 +188,18 @@
   align-items: center;
   justify-content: center;
   background-color: white;
+  overflow: auto;
   border-radius: 5px;
   box-shadow: 5px 5px 13px #e3e3e3, -5px -5px 13px #ffffff;
-  pointer-events: none;
 }
 
 .data_list_name h1 {
   font-size: 20px;
+  pointer-events: none;
 }
 
 .data_list_name small {
+  pointer-events: none;
   color: #888;
 }
 
