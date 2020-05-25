@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import userLogo from "../assets/user.png";
 import "./profile.css";
 import "./navbar.css";
 import moment from "moment";
@@ -331,7 +332,10 @@ export default class Profile extends Component {
         <div className="profile_main">
           <div className="rose-prof-div"></div>
           <div className="profile_div">
-            <div className="prof_image_div"></div>
+            <div className="prof_image_div">
+              <img className="image_p" src={userLogo}></img>
+              <button className="image_b">Upload photo</button>
+            </div>
             <div className="prof_details_div">
               {this.state.isDeleteClicked ? this.openDelete() : null}
               <div className="prof_msg_div">
