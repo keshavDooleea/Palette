@@ -577,6 +577,7 @@
   height: 300px;
   border-radius: 50%;
   position: absolute;
+  left: 0;
   bottom: 0;
   background-color: rosybrown;
   opacity: 0.6;

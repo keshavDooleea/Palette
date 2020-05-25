@@ -1,4 +1,8 @@
 @import url("https://fonts.googleapis.com/css?family=Josefin+Sans:700&display=swap");
+@font-face {
+  font-family: manus;
+  src: url("../assets/manus.ttf");
+}
 
 .profile_main {
   width: 100%;
@@ -7,6 +11,7 @@
   align-items: center;
   justify-content: center;
   background-color: #f4f3ef;
+  position: relative;
 }
 
 .profile_div {
@@ -16,15 +21,131 @@
   grid-template-columns: 40% 60%;
   background-color: #f4f3ef;
   border: 2px solid #888;
+  z-index: 2;
 }
 
 .prof_image_div {
   width: 100%;
   height: 100%;
-  background-color: black;
+  border-right: 2px solid #888;
 }
 
 .prof_details_div {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.prof_msg_div {
+  width: 100%;
+  height: 130%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prof_username_div,
+.prof_password_div {
+  width: 90%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 25% 35% 20%;
+  place-content: center;
+}
+
+.prof_username_div h1,
+.prof_password_div h1 {
+  color: #333333;
+  font-size: 23px;
+  pointer-events: none;
+  user-select: none;
+  align-self: center;
+}
+
+.prof_username_div p,
+.prof_password_div p {
+  font-size: 23px;
+  font-family: manus;
+  color: #888;
+  font-style: italic;
+  pointer-events: none;
+  user-select: none;
+}
+
+.prof_username_div div,
+.prof_password_div div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prof_username_div div button,
+.prof_password_div div button {
+  width: 80%;
+  height: 70%;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  user-select: none;
+  font-family: "Josefin Sans", sans-serif;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 5px 5px 13px #e3e3e3, -5px -5px 13px #ffffff;
+}
+
+.prof_username_div div button:active,
+.prof_password_div div button:active,
+.prof_button_div button:active {
+  box-shadow: inset -4px -4px 20px #d2d1ce, inset 3px 3px 7px #ffffff;
+}
+
+.prof_button_div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prof_button_div button {
+  width: 30%;
+  height: 40%;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  user-select: none;
+  font-size: 20px;
+  font-family: "Josefin Sans", sans-serif;
+  color: #fff;
+  background-color: rosybrown;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px rgb(206, 170, 170), -5px -5px 13px #ffffff;
+}
+
+.prof_date_div {
+  width: 95%;
+  height: 100%;
+  color: #888;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-end;
+  margin-bottom: 10px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.rose-prof-div {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: rosybrown;
+  opacity: 0.6;
+  transform: translate(-25%, 25%);
 }

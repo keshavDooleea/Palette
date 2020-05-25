@@ -138,4 +138,12 @@ app.delete("/palette/:id/:paletteId", (req, res) => {
   });
 });
 
+app.get("/profile/:id", (req, res) => {
+  User.findById(req.params.id, (err, user) => {
+    if (err) return;
+
+    res.json(user);
+  });
+});
+
 app.listen(5000, () => console.log("listening on port 5000"));
