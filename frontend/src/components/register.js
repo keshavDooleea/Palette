@@ -44,7 +44,7 @@ export default class Register extends Component {
       displayMsg(
         errorMsgDiv,
         errorMsg,
-        "Username must be longer than 5 letters!"
+        "Username must be longer than 4 letters!"
       );
 
       return;
@@ -52,7 +52,7 @@ export default class Register extends Component {
       displayMsg(
         errorMsgDiv,
         errorMsg,
-        "Password must be longer than 5 letters!"
+        "Password must be longer than 4 letters!"
       );
 
       return;

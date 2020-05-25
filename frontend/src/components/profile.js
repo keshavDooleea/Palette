@@ -12,13 +12,18 @@ export default class Profile extends Component {
       id: this.props.match.params.id,
       data: [],
       password: "",
+      textColor: "",
       isUsernameClicked: false,
       isPasswordClicked: false,
       isDeleteClicked: false,
+      showMessage: false,
+      messageShown: "",
     };
 
     this.fetchData = this.fetchData.bind(this);
     this.deleteRequest = this.deleteRequest.bind(this);
+    this.updateUsername = this.updateUsername.bind(this);
+    this.closeUsernameDiv = this.closeUsernameDiv.bind(this);
   }
 
   componentDidMount() {
@@ -52,6 +57,87 @@ export default class Profile extends Component {
       });
   }
 
+  showMsg() {
+    setTimeout(() => {
+      this.setState({
+        showMessage: false,
+      });
+    }, 3000);
+
+    return (
+      <div className="show_msg_div">
+        <p
+          className="show_msg"
+          style={{
+            color: `${this.state.textColor}`,
+          }}
+        >
+          {this.state.messageShown}
+        </p>
+      </div>
+    );
+  }
+
+  closeUsernameDiv() {
+    document
+      .querySelector(".username_change_div")
+      .classList.add("remove_slide_in");
+
+    setTimeout(() => {
+      document.querySelector(".prof_button_div").classList.remove("no_pointer");
+
+      document.querySelector(".pass_change").classList.remove("no_pointer");
+      document.querySelector(".prof_password_div").style.opacity = "1";
+      document.querySelector(".prof_button_div").style.opacity = "1";
+
+      this.setState({
+        isUsernameClicked: false,
+      });
+    }, 1800);
+  }
+
+  updateUsername() {
+    const newUsername = document.querySelector(".prof_username_input").value;
+
+    if (newUsername.length === 0) {
+      this.setState({
+        messageShown: "Enter a username",
+        textColor: "rgb(189, 76, 76)",
+        showMessage: true,
+      });
+    } else if (newUsername.length < 5) {
+      this.setState({
+        messageShown: "Enter more than 4 letters",
+        textColor: "rgb(189, 76, 76)",
+        showMessage: true,
+      });
+    } else {
+      // disappear div
+      this.closeUsernameDiv();
+
+      // update data
+      fetch(`http://localhost:5000/profile/${this.state.id}`, {
+        headers: { "Content-Type": "application/json" },
+        method: "PUT",
+        body: JSON.stringify({
+          username: newUsername,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data === "success") {
+            this.fetchData();
+
+            this.setState({
+              messageShown: "Username saved",
+              textColor: "rgb(64, 122, 64)",
+              showMessage: true,
+            });
+          }
+        });
+    }
+  }
+
   openUsername() {
     // disble other button
     document.querySelector(".pass_change").classList.add("no_pointer");
@@ -62,35 +148,10 @@ export default class Profile extends Component {
     return (
       <div className="username_change_div">
         <h1>Username: </h1>
-        <input type="text" spellCheck="false" />
+        <input type="text" className="prof_username_input" spellCheck="false" />
         <div className="username_change_button_div">
-          <button>Save</button>
-          <button
-            onClick={() => {
-              document
-                .querySelector(".username_change_div")
-                .classList.add("remove_slide_in");
-
-              setTimeout(() => {
-                document
-                  .querySelector(".prof_button_div")
-                  .classList.remove("no_pointer");
-
-                document
-                  .querySelector(".pass_change")
-                  .classList.remove("no_pointer");
-                document.querySelector(".prof_password_div").style.opacity =
-                  "1";
-                document.querySelector(".prof_button_div").style.opacity = "1";
-
-                this.setState({
-                  isUsernameClicked: false,
-                });
-              }, 1800);
-            }}
-          >
-            Cancel
-          </button>
+          <button onClick={this.updateUsername}>Save</button>
+          <button onClick={this.closeUsernameDiv}>Cancel</button>
         </div>
       </div>
     );
@@ -236,7 +297,9 @@ export default class Profile extends Component {
             <div className="prof_image_div"></div>
             <div className="prof_details_div">
               {this.state.isDeleteClicked ? this.openDelete() : null}
-              <div className="prof_msg_div"></div>
+              <div className="prof_msg_div">
+                {this.state.showMessage ? this.showMsg() : null}
+              </div>
               <div className="prof_username_div">
                 {this.state.isUsernameClicked ? this.openUsername() : null}
                 <h1>Username: </h1>

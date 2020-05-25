@@ -40,14 +40,14 @@ export default class Login extends Component {
       displayMsg(
         errorMsgDiv,
         errorMsg,
-        "Username must be longer than 5 letters!"
+        "Username must be longer than 4 letters!"
       );
       return;
     } else if (password.length < 5) {
       displayMsg(
         errorMsgDiv,
         errorMsg,
-        "Password must be longer than 5 letters!"
+        "Password must be longer than 4 letters!"
       );
       return;
     } else {

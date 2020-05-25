@@ -155,4 +155,18 @@ app.delete("/profile/:id", (req, res) => {
   });
 });
 
+app.put("/profile/:id", (req, res) => {
+  User.findByIdAndUpdate(
+    { _id: req.params.id },
+    { username: req.body.username },
+    (err, user) => {
+      if (err) {
+        res.json(err);
+      }
+
+      res.json("success");
+    }
+  );
+});
+
 app.listen(5000, () => console.log("listening on port 5000"));
