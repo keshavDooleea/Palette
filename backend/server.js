@@ -155,10 +155,26 @@ app.delete("/profile/:id", (req, res) => {
   });
 });
 
-app.put("/profile/:id", (req, res) => {
+// update username from profile
+app.put("/profile/username/:id", (req, res) => {
   User.findByIdAndUpdate(
     { _id: req.params.id },
     { username: req.body.username },
+    (err, user) => {
+      if (err) {
+        res.json(err);
+      }
+
+      res.json("success");
+    }
+  );
+});
+
+// update password from profile
+app.put("/profile/password/:id", (req, res) => {
+  User.findByIdAndUpdate(
+    { _id: req.params.id },
+    { password: req.body.password },
     (err, user) => {
       if (err) {
         res.json(err);

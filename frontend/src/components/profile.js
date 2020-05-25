@@ -23,7 +23,9 @@ export default class Profile extends Component {
     this.fetchData = this.fetchData.bind(this);
     this.deleteRequest = this.deleteRequest.bind(this);
     this.updateUsername = this.updateUsername.bind(this);
+    this.updatePassword = this.updatePassword.bind(this);
     this.closeUsernameDiv = this.closeUsernameDiv.bind(this);
+    this.closePasswordDiv = this.closePasswordDiv.bind(this);
   }
 
   componentDidMount() {
@@ -96,6 +98,22 @@ export default class Profile extends Component {
     }, 1800);
   }
 
+  closePasswordDiv() {
+    document
+      .querySelector(".password_change_div")
+      .classList.add("remove_slide_pass_in");
+
+    setTimeout(() => {
+      document.querySelector(".prof_username_div").style.opacity = "1";
+      document.querySelector(".prof_button_div").style.opacity = "1";
+      document.querySelector(".prof_button_div").classList.remove("no_pointer");
+      document.querySelector(".username_change").classList.remove("no_pointer");
+      this.setState({
+        isPasswordClicked: false,
+      });
+    }, 1800);
+  }
+
   updateUsername() {
     const newUsername = document.querySelector(".prof_username_input").value;
 
@@ -116,7 +134,7 @@ export default class Profile extends Component {
       this.closeUsernameDiv();
 
       // update data
-      fetch(`http://localhost:5000/profile/${this.state.id}`, {
+      fetch(`http://localhost:5000/profile/username/${this.state.id}`, {
         headers: { "Content-Type": "application/json" },
         method: "PUT",
         body: JSON.stringify({
@@ -130,6 +148,48 @@ export default class Profile extends Component {
 
             this.setState({
               messageShown: "Username saved",
+              textColor: "rgb(64, 122, 64)",
+              showMessage: true,
+            });
+          }
+        });
+    }
+  }
+
+  updatePassword() {
+    const newPassword = document.querySelector(".prof_password_input").value;
+
+    if (newPassword.length === 0) {
+      this.setState({
+        messageShown: "Enter a password",
+        textColor: "rgb(189, 76, 76)",
+        showMessage: true,
+      });
+    } else if (newPassword.length < 5) {
+      this.setState({
+        messageShown: "Enter more than 4 letters",
+        textColor: "rgb(189, 76, 76)",
+        showMessage: true,
+      });
+    } else {
+      // disappear div
+      this.closePasswordDiv();
+
+      // update data
+      fetch(`http://localhost:5000/profile/password/${this.state.id}`, {
+        headers: { "Content-Type": "application/json" },
+        method: "PUT",
+        body: JSON.stringify({
+          password: newPassword,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data === "success") {
+            this.fetchData();
+
+            this.setState({
+              messageShown: "Password saved",
               textColor: "rgb(64, 122, 64)",
               showMessage: true,
             });
@@ -167,33 +227,10 @@ export default class Profile extends Component {
     return (
       <div className="password_change_div">
         <h1>Password: </h1>
-        <input type="text" spellCheck="false" />
+        <input type="text" className="prof_password_input" spellCheck="false" />
         <div className="username_change_button_div">
-          <button>Save</button>
-          <button
-            onClick={() => {
-              document
-                .querySelector(".password_change_div")
-                .classList.add("remove_slide_pass_in");
-
-              setTimeout(() => {
-                document.querySelector(".prof_username_div").style.opacity =
-                  "1";
-                document.querySelector(".prof_button_div").style.opacity = "1";
-                document
-                  .querySelector(".prof_button_div")
-                  .classList.remove("no_pointer");
-                document
-                  .querySelector(".username_change")
-                  .classList.remove("no_pointer");
-                this.setState({
-                  isPasswordClicked: false,
-                });
-              }, 1800);
-            }}
-          >
-            Cancel
-          </button>
+          <button onClick={this.updatePassword}>Save</button>
+          <button onClick={this.closePasswordDiv}>Cancel</button>
         </div>
       </div>
     );
