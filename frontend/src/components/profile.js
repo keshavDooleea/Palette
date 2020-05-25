@@ -56,7 +56,12 @@ export default class Profile extends Component {
             </ul>
           </div>
         </nav>
-        <div className="profile_main">PROFILE</div>
+        <div className="profile_main">
+          <div className="profile_div">
+            <div className="prof_image_div"></div>
+            <div className="prof_details_div"></div>
+          </div>
+        </div>
       </div>
     );
   }

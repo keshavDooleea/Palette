@@ -2,6 +2,29 @@
 
 .profile_main {
   width: 100%;
-  height: 100vh;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #f4f3ef;
+}
+
+.profile_div {
+  width: 75%;
+  height: 80%;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  background-color: #f4f3ef;
+  border: 2px solid #888;
+}
+
+.prof_image_div {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+}
+
+.prof_details_div {
+  width: 100%;
+  height: 100%;
 }
