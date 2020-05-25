@@ -533,10 +533,15 @@ export default class Palette extends Component {
       ".list_color_span"
     );
 
-    // update divs background
+    // update divs background as well as adjust inputs
     for (let i = 0; i < colors.length; i++) {
       divs[i].style.backgroundColor = colors[i].style.backgroundColor;
+      const chromaColor = chroma(colors[i].style.backgroundColor).hex();
+      this.assignInputColor(i, chromaColor);
+      this.inputActions(i, chromaColor);
     }
+
+    this.setInputRange();
 
     // enable fetch
     this.setState({
