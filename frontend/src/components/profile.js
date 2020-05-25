@@ -18,6 +18,7 @@ export default class Profile extends Component {
     };
 
     this.fetchData = this.fetchData.bind(this);
+    this.deleteRequest = this.deleteRequest.bind(this);
   }
 
   componentDidMount() {
@@ -137,12 +138,27 @@ export default class Profile extends Component {
     );
   }
 
+  deleteRequest() {
+    fetch(`http://localhost:5000/profile/${this.state.id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data === "success") {
+          // successfully deleted
+          window.location.assign("/login");
+        }
+      });
+  }
+
   openDelete() {
     return (
       <div className="delete_prof_div">
         <p>Are you sure you want to delete your profile?</p>
         <div className="del_btn_div">
-          <button className="delete_prof_btn">Delete</button>
+          <button className="delete_prof_btn" onClick={this.deleteRequest}>
+            Delete
+          </button>
           <button
             className="cancel_delete_prof_btn"
             onClick={() => {

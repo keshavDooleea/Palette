@@ -146,4 +146,13 @@ app.get("/profile/:id", (req, res) => {
   });
 });
 
+app.delete("/profile/:id", (req, res) => {
+  console.log("S");
+  User.findByIdAndDelete(req.params.id, (err, data) => {
+    if (err) res.json("error");
+
+    res.json("success");
+  });
+});
+
 app.listen(5000, () => console.log("listening on port 5000"));
