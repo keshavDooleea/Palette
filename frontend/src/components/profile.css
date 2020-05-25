@@ -37,6 +37,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 .prof_msg_div {
@@ -87,7 +88,9 @@
 }
 
 .prof_username_div div button,
-.prof_password_div div button {
+.prof_password_div div button,
+.delete_prof_btn,
+.cancel_delete_prof_btn {
   width: 60%;
   height: 50%;
   cursor: pointer;
@@ -100,8 +103,16 @@
   box-shadow: 5px 5px 13px #e3e3e3, -5px -5px 13px #ffffff;
 }
 
+.delete_prof_btn {
+  color: #fff;
+  margin-right: 25px;
+  background-color: rosybrown;
+}
+
 .prof_username_div div button:active,
 .prof_password_div div button:active,
+.delete_prof_btn:active,
+.cancel_delete_prof_btn:active,
 .prof_button_div button:active {
   box-shadow: inset -4px -4px 20px #d2d1ce, inset 3px 3px 7px #ffffff;
 }
@@ -261,4 +272,57 @@
 
 .username_change_button_div button {
   margin-left: 10px;
+}
+
+.delete_prof_div {
+  width: 80%;
+  height: 70%;
+  border: 2px solid #888888;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fade-in 1.8s ease-out forwards;
+}
+
+.delete_prof_div p {
+  font-size: 19px;
+  text-align: center;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  80%,
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade_out {
+  animation: fade-out 1.4s ease-in-out forwards;
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  80%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.del_btn_div {
+  width: 50%;
+  height: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 10px;
 }

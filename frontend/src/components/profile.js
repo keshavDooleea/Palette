@@ -14,6 +14,7 @@ export default class Profile extends Component {
       password: "",
       isUsernameClicked: false,
       isPasswordClicked: false,
+      isDeleteClicked: false,
     };
 
     this.fetchData = this.fetchData.bind(this);
@@ -84,7 +85,7 @@ export default class Profile extends Component {
                 this.setState({
                   isUsernameClicked: false,
                 });
-              }, 2000);
+              }, 1800);
             }}
           >
             Cancel
@@ -126,7 +127,40 @@ export default class Profile extends Component {
                 this.setState({
                   isPasswordClicked: false,
                 });
-              }, 2000);
+              }, 1800);
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  openDelete() {
+    return (
+      <div className="delete_prof_div">
+        <p>Are you sure you want to delete your profile?</p>
+        <div className="del_btn_div">
+          <button className="delete_prof_btn">Delete</button>
+          <button
+            className="cancel_delete_prof_btn"
+            onClick={() => {
+              document
+                .querySelector(".delete_prof_div")
+                .classList.add("fade_out");
+
+              setTimeout(() => {
+                document.querySelector(".prof_username_div").style.visibility =
+                  "visible";
+                document.querySelector(".prof_password_div").style.visibility =
+                  "visible";
+                document.querySelector(".prof_button_div").style.visibility =
+                  "visible";
+                this.setState({
+                  isDeleteClicked: false,
+                });
+              }, 1200);
             }}
           >
             Cancel
@@ -185,6 +219,7 @@ export default class Profile extends Component {
           <div className="profile_div">
             <div className="prof_image_div"></div>
             <div className="prof_details_div">
+              {this.state.isDeleteClicked ? this.openDelete() : null}
               <div className="prof_msg_div"></div>
               <div className="prof_username_div">
                 {this.state.isUsernameClicked ? this.openUsername() : null}
@@ -222,7 +257,24 @@ export default class Profile extends Component {
                 </div>
               </div>
               <div className="prof_button_div">
-                <button>Delete Account</button>
+                <button
+                  onClick={() => {
+                    document.querySelector(
+                      ".prof_username_div"
+                    ).style.visibility = "hidden";
+                    document.querySelector(
+                      ".prof_password_div"
+                    ).style.visibility = "hidden";
+                    document.querySelector(
+                      ".prof_button_div"
+                    ).style.visibility = "hidden";
+                    this.setState({
+                      isDeleteClicked: true,
+                    });
+                  }}
+                >
+                  Delete Account
+                </button>
               </div>
               <div className="prof_date_div">
                 <p>
