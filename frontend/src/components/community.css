@@ -22,3 +22,14 @@
   color: #888;
   font-size: 40px;
 }
+
+.rose-com-div {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  background-color: rosybrown;
+  opacity: 0.6;
+  transform: translate(-25%, 25%);
+}

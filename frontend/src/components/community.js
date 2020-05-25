@@ -67,6 +67,8 @@ export default class Community extends Component {
           </div>
         </nav>
         <div className="community_main">
+          <div className="rose-com-div"></div>
+
           {this.state.isDataEmpty ? this.emptyCom() : null}
         </div>
       </div>
