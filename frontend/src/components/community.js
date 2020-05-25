@@ -9,7 +9,17 @@ export default class Community extends Component {
 
     this.state = {
       id: this.props.match.params.id,
+      isDataEmpty: true,
     };
+  }
+
+  // when user doesnt have any palette saved yet
+  emptyCom() {
+    return (
+      <div className="empty_com">
+        <p>No one has added a palette yet..</p>
+      </div>
+    );
   }
 
   render() {
@@ -56,7 +66,9 @@ export default class Community extends Component {
             </ul>
           </div>
         </nav>
-        <div className="community_main">COMAMAAMAM</div>
+        <div className="community_main">
+          {this.state.isDataEmpty ? this.emptyCom() : null}
+        </div>
       </div>
     );
   }
