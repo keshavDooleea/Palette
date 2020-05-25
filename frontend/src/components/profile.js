@@ -12,6 +12,8 @@ export default class Profile extends Component {
       id: this.props.match.params.id,
       data: [],
       password: "",
+      isUsernameClicked: false,
+      isPasswordClicked: false,
     };
 
     this.fetchData = this.fetchData.bind(this);
@@ -27,7 +29,6 @@ export default class Profile extends Component {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         const password = data.password;
         let encrypted = "";
 
@@ -47,6 +48,92 @@ export default class Profile extends Component {
           password: encrypted,
         });
       });
+  }
+
+  openUsername() {
+    // disble other button
+    document.querySelector(".pass_change").classList.add("no_pointer");
+    document.querySelector(".prof_button_div").classList.add("no_pointer");
+    document.querySelector(".prof_password_div").style.opacity = "0.3";
+    document.querySelector(".prof_button_div").style.opacity = "0.3";
+
+    return (
+      <div className="username_change_div">
+        <h1>Username: </h1>
+        <input type="text" spellCheck="false" />
+        <div className="username_change_button_div">
+          <button>Save</button>
+          <button
+            onClick={() => {
+              document
+                .querySelector(".username_change_div")
+                .classList.add("remove_slide_in");
+
+              setTimeout(() => {
+                document
+                  .querySelector(".prof_button_div")
+                  .classList.remove("no_pointer");
+
+                document
+                  .querySelector(".pass_change")
+                  .classList.remove("no_pointer");
+                document.querySelector(".prof_password_div").style.opacity =
+                  "1";
+                document.querySelector(".prof_button_div").style.opacity = "1";
+
+                this.setState({
+                  isUsernameClicked: false,
+                });
+              }, 2000);
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  openPassword() {
+    // disble other button
+    document.querySelector(".username_change").classList.add("no_pointer");
+    document.querySelector(".prof_button_div").classList.add("no_pointer");
+    document.querySelector(".prof_username_div").style.opacity = "0.3";
+    document.querySelector(".prof_button_div").style.opacity = "0.3";
+
+    return (
+      <div className="password_change_div">
+        <h1>Password: </h1>
+        <input type="text" spellCheck="false" />
+        <div className="username_change_button_div">
+          <button>Save</button>
+          <button
+            onClick={() => {
+              document
+                .querySelector(".password_change_div")
+                .classList.add("remove_slide_pass_in");
+
+              setTimeout(() => {
+                document.querySelector(".prof_username_div").style.opacity =
+                  "1";
+                document.querySelector(".prof_button_div").style.opacity = "1";
+                document
+                  .querySelector(".prof_button_div")
+                  .classList.remove("no_pointer");
+                document
+                  .querySelector(".username_change")
+                  .classList.remove("no_pointer");
+                this.setState({
+                  isPasswordClicked: false,
+                });
+              }, 2000);
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    );
   }
 
   render() {
@@ -100,17 +187,38 @@ export default class Profile extends Component {
             <div className="prof_details_div">
               <div className="prof_msg_div"></div>
               <div className="prof_username_div">
+                {this.state.isUsernameClicked ? this.openUsername() : null}
                 <h1>Username: </h1>
                 <p key={this.state.data.username}>{this.state.data.username}</p>
-                <div>
-                  <button>Change</button>
+                <div className="button_div">
+                  <button
+                    className="username_change"
+                    onClick={() => {
+                      this.setState({
+                        isUsernameClicked: true,
+                      });
+                    }}
+                  >
+                    Change
+                  </button>
                 </div>
               </div>
               <div className="prof_password_div">
+                {this.state.isPasswordClicked ? this.openPassword() : null}
+
                 <h1>Password: </h1>
                 <p key={this.state.password}>{this.state.password}</p>
-                <div>
-                  <button>Change</button>
+                <div className="button_div">
+                  <button
+                    className="pass_change"
+                    onClick={() => {
+                      this.setState({
+                        isPasswordClicked: true,
+                      });
+                    }}
+                  >
+                    Change
+                  </button>
                 </div>
               </div>
               <div className="prof_button_div">

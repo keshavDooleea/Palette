@@ -27,6 +27,7 @@
 .prof_image_div {
   width: 100%;
   height: 100%;
+  z-index: 10;
   border-right: 2px solid #888;
 }
 
@@ -50,9 +51,10 @@
 .prof_password_div {
   width: 90%;
   height: 100%;
-  display: grid;
-  grid-template-columns: 25% 35% 20%;
-  place-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 .prof_username_div h1,
@@ -66,17 +68,18 @@
 
 .prof_username_div p,
 .prof_password_div p {
+  width: 100%;
   font-size: 23px;
   font-family: manus;
   color: #888;
   font-style: italic;
   pointer-events: none;
   user-select: none;
+  margin-left: 15px;
 }
 
-.prof_username_div div,
-.prof_password_div div {
-  width: 100%;
+.button_div {
+  width: 60%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -85,8 +88,8 @@
 
 .prof_username_div div button,
 .prof_password_div div button {
-  width: 80%;
-  height: 70%;
+  width: 60%;
+  height: 50%;
   cursor: pointer;
   border: none;
   outline: none;
@@ -113,7 +116,7 @@
 
 .prof_button_div button {
   width: 30%;
-  height: 40%;
+  height: 55%;
   cursor: pointer;
   border: none;
   outline: none;
@@ -148,4 +151,114 @@
   background-color: rosybrown;
   opacity: 0.6;
   transform: translate(-25%, 25%);
+}
+
+.username_change_div {
+  width: 100%;
+  height: 100%;
+  background-color: #f4f3ef;
+  position: absolute;
+  animation: slide-in-div 1.8s cubic-bezier(0.64, -0.16, 0.36, 1.56) forwards;
+  border: 2px solid #888;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+@keyframes slide-in-div {
+  0% {
+    top: -400%;
+  }
+
+  80%,
+  100% {
+    top: 0%;
+  }
+}
+
+.password_change_div {
+  width: 100%;
+  height: 100%;
+  background-color: #f4f3ef;
+  position: absolute;
+  animation: slide-in-pass-div 1.8s cubic-bezier(0.64, -0.16, 0.36, 1.56)
+    forwards;
+  border: 2px solid #888;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+@keyframes slide-in-pass-div {
+  0% {
+    bottom: -400%;
+  }
+
+  80%,
+  100% {
+    bottom: 0%;
+  }
+}
+
+.remove_slide_in {
+  animation: slide-out-div 1.8s cubic-bezier(0.64, -0.16, 0.36, 1.56) forwards;
+}
+
+.remove_slide_pass_in {
+  animation: slide-out-pass-div 1.8s cubic-bezier(0.64, -0.16, 0.36, 1.56)
+    forwards;
+}
+
+@keyframes slide-out-div {
+  0% {
+    top: 0%;
+  }
+
+  80%,
+  100% {
+    top: -400%;
+  }
+}
+
+@keyframes slide-out-pass-div {
+  0% {
+    bottom: 0%;
+  }
+
+  80%,
+  100% {
+    bottom: -400%;
+  }
+}
+
+.username_change_div h1,
+.password_change_div h1 {
+  font-size: 18px;
+}
+.username_change_div input,
+.password_change_div input {
+  border: none;
+  outline: none;
+  height: 50%;
+  width: 40%;
+  font-family: manus;
+  font-size: 24px;
+}
+
+.no_pointer {
+  pointer-events: none;
+}
+
+.username_change_button_div {
+  width: 30%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.username_change_button_div button {
+  margin-left: 10px;
 }
