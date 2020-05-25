@@ -185,7 +185,7 @@ export default class Profile extends Component {
                   className="navLink"
                   activeClassName="activeLink"
                 >
-                  My Palette
+                  Palette
                 </NavLink>
               </li>
               <li>
@@ -203,7 +203,7 @@ export default class Profile extends Component {
                   className="navLink"
                   activeClassName="activeLink"
                 >
-                  Profile
+                  My Profile
                 </NavLink>
               </li>
               <li>

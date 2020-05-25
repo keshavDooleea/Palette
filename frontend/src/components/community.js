@@ -37,7 +37,7 @@ export default class Community extends Component {
                   className="navLink"
                   activeClassName="activeLink"
                 >
-                  My Palette
+                  Palette
                 </NavLink>
               </li>
               <li>
@@ -55,7 +55,7 @@ export default class Community extends Component {
                   className="navLink"
                   activeClassName="activeLink"
                 >
-                  Profile
+                  My Profile
                 </NavLink>
               </li>
               <li>

@@ -290,6 +290,8 @@
 }
 
 .delete_prof_div p {
+  pointer-events: none;
+  user-select: none;
   font-size: 19px;
   text-align: center;
 }
