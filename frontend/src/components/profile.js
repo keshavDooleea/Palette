@@ -333,7 +333,7 @@ export default class Profile extends Component {
           <div className="rose-prof-div"></div>
           <div className="profile_div">
             <div className="prof_image_div">
-              <img className="image_p" src={userLogo}></img>
+              <img className="image_p" src={userLogo} alt="userLogo"></img>
               <button className="image_b">Upload photo</button>
             </div>
             <div className="prof_details_div">

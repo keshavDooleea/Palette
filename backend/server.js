@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongo = require("mongoose");
 const User = require("./model/User").User; // load schema
+const History = require("./model/History").History; // load schema
 require("dotenv/config");
 
 const app = express();
@@ -104,8 +105,15 @@ app.post("/palette/:id", (req, res) => {
   };
 
   // find user and push palette
-  User.findById(req.params.id, (err, user) => {
+  User.findById(req.params.id, async (err, user) => {
     if (user != null) {
+      // save to all time history
+      const newItem = new History({
+        username: user.username,
+        hexArray: body.hexArray,
+      });
+      const updateHistory = await newItem.save();
+
       // verify if name exists
       for (let i = 0; i < user.palette.length; i++) {
         if (user.palette[i].name == body.name) {

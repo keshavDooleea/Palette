@@ -738,7 +738,7 @@ export default class Palette extends Component {
                 });
               }}
             >
-              My List
+              Collections
             </button>
             <button onClick={() => this.generate()} className="generate_btn">
               Generate Colors
