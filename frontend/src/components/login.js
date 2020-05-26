@@ -59,8 +59,6 @@ export default class Login extends Component {
       password,
     };
 
-    // console.log(user);
-
     // show loading spinner
     loginBtn.style.visibility = "hidden";
     registerBtn.style.visibility = "hidden";

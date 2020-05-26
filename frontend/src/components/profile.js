@@ -152,6 +152,12 @@ export default class Profile extends Component {
               textColor: "rgb(64, 122, 64)",
               showMessage: true,
             });
+          } else if (data === "exists") {
+            this.setState({
+              messageShown: "Username already exists",
+              textColor: "rgb(189, 76, 76)",
+              showMessage: true,
+            });
           }
         });
     }

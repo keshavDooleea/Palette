@@ -47,7 +47,6 @@ export default class Community extends Component {
   }
 
   displayPalettes() {
-    console.log(this.state.historyData);
     return (
       <div className="history_div">
         {this.state.historyData.map((data) => (

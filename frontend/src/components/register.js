@@ -65,8 +65,6 @@ export default class Register extends Component {
       password,
     };
 
-    console.log(user);
-
     // show loading spinner
     createBtn.style.visibility = "hidden";
     loadingGif.style.display = "block";

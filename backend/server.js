@@ -13,7 +13,7 @@ app.use(express.json());
 // connect to mongoDB
 mongo.connect(
   process.env.DB_CONNECTION,
-  { useUnifiedTopology: true, useNewUrlParser: true },
+  { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false },
   () => console.log("connected to DB!")
 );
 mongo.set("useCreateIndex", true);
@@ -164,18 +164,30 @@ app.delete("/profile/:id", (req, res) => {
 });
 
 // update username from profile
-app.put("/profile/username/:id", (req, res) => {
-  User.findByIdAndUpdate(
-    { _id: req.params.id },
-    { username: req.body.username },
-    (err, user) => {
-      if (err) {
-        res.json(err);
-      }
+app.put("/profile/username/:id", async (req, res) => {
+  await User.exists({ username: req.body.username }, function (err, user) {
+    if (err) {
+      res.send(err);
+    } else {
+      // username already exists
+      if (user) {
+        res.json("exists");
+      } else {
+        // update
+        User.findByIdAndUpdate(
+          { _id: req.params.id },
+          { username: req.body.username },
+          (err, user) => {
+            if (err) {
+              res.json(err);
+            }
 
-      res.json("success");
+            res.json("success");
+          }
+        );
+      }
     }
-  );
+  });
 });
 
 // update password from profile

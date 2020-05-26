@@ -594,3 +594,9 @@
   box-shadow: 0px 0px 4px rgb(189, 76, 76), 0px 0px 7px rgb(189, 76, 76),
     0px 0px 10px rgb(189, 76, 76);
 }
+
+@media screen and (max-width: 780px) {
+  body {
+    display: none;
+  }
+}
