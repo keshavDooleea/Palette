@@ -193,4 +193,12 @@ app.put("/profile/password/:id", (req, res) => {
   );
 });
 
+app.get("/community", async (req, res) => {
+  await History.find({}, (err, users) => {
+    if (err) res.json(err);
+
+    res.json(users);
+  });
+});
+
 app.listen(5000, () => console.log("listening on port 5000"));

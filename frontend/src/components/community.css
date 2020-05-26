@@ -6,8 +6,11 @@
 
 .community_main {
   width: 100%;
-  height: 100vh;
+  height: 90vh;
   background-color: #f4f3ef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .empty_com {
@@ -21,6 +24,97 @@
   font-family: manus;
   color: #888;
   font-size: 40px;
+}
+
+.history_div {
+  width: 60%;
+  height: 85%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.history_item {
+  width: 95%;
+  min-height: 20%;
+  margin-bottom: 20px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 5px 5px 13px #e3e3e3, -5px -5px 13px #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.history_details {
+  width: 50%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  user-select: none;
+  border-radius: 5px;
+  box-shadow: 5px 5px 13px #e3e3e3, -5px -5px 13px #ffffff;
+}
+
+.history_name {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.history_p {
+  width: 100%;
+  height: 60%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: #888;
+  font-family: manus;
+  font-size: 19px;
+}
+
+.history_name p {
+  font-size: 20px;
+  display: flex;
+  margin: 15px 0 0 10px;
+  padding: 0;
+}
+
+.history_name small {
+  font-size: 14px;
+  font-style: italic;
+  margin-right: 10px;
+  padding: 0;
+  align-self: flex-end;
+}
+
+.history_body {
+  height: 100%;
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.history_color_span {
+  width: 100%;
+  height: 80%;
+  border-radius: 5px;
+  box-shadow: 5px 5px 13px #e3e3e3, -5px -5px 13px #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.history_body .history_colors {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 
 .rose-com-div {
