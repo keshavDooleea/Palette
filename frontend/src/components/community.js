@@ -28,6 +28,7 @@ export default class Community extends Component {
             isDataEmpty: true,
           });
         } else {
+          data.reverse();
           this.setState({
             isDataEmpty: false,
             historyData: data,
@@ -73,6 +74,19 @@ export default class Community extends Component {
                       backgroundColor: `${item}`,
                     }}
                   ></span>
+                ))}
+              </span>
+              <span className="history_colors_text">
+                {data.hexArray.map((item) => (
+                  <span
+                    className="span_hex_text"
+                    key={item}
+                    style={{
+                      color: `${item}`,
+                    }}
+                  >
+                    {item}
+                  </span>
                 ))}
               </span>
             </div>
