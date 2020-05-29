@@ -40,9 +40,9 @@ class App extends Component {
       <Router>
         <Route path={["/", "/login"]} exact strict component={Login}></Route>
         <Route path="/register" exact strict component={Register}></Route>
-        <Route path="/palette/:id" exact component={Palette}></Route>
-        <Route path="/community/:id" exact component={Community}></Route>
-        <Route path="/profile/:id" exact component={Profile}></Route>
+        <Route path="/palette" exact component={Palette}></Route>
+        <Route path="/community" exact component={Community}></Route>
+        <Route path="/profile" exact component={Profile}></Route>
       </Router>
     );
   }

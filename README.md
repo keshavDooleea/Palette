@@ -11,14 +11,14 @@ Allows to generate random colors which can be changed and ajusted as wished. Use
 Add your MongoDB account credentiels in .env file
 
 ```bash
-npm install mongoose express nodemon cors dotenv
+npm install mongoose express nodemon cors dotenv bcrypt jsonwebtoken
 create .env file 
-nodemon server.js (to start the server)
+nodemon server.js
 ```
 /frontend
 
 ```bash
-npm init (to set up node_modules)
-npm install chroma-js clipboard-polyfill moment
-npm start (to run the application)
+npm init 
+npm install chroma-js clipboard-polyfill moment jwt-decode
+npm start 
 ```

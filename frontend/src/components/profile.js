@@ -4,13 +4,14 @@ import userLogo from "../assets/user.png";
 import "./profile.css";
 import "./navbar.css";
 import moment from "moment";
+import jwt_decode from "jwt-decode";
 
 export default class Profile extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      id: this.props.match.params.id,
+      id: "",
       data: [],
       password: "",
       textColor: "",
@@ -19,6 +20,7 @@ export default class Profile extends Component {
       isDeleteClicked: false,
       showMessage: false,
       messageShown: "",
+      user: {}
     };
 
     this.fetchData = this.fetchData.bind(this);
@@ -30,12 +32,29 @@ export default class Profile extends Component {
   }
 
   componentDidMount() {
+    this.setAccount();
     this.fetchData();
   }
 
+  setAccount() {
+    // retrieve user
+    const token = localStorage.usertoken;
+    const decodedUser = jwt_decode(token);
+
+    this.setState({
+      user: decodedUser,
+    });
+  }
+
   fetchData() {
-    fetch(`http://localhost:5000/profile/${this.state.id}`, {
+
+    fetch("http://localhost:5000/profile", {
       method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        authorization: `Bearer ${localStorage.usertoken}`,
+      }
     })
       .then((res) => res.json())
       .then((data) => {
@@ -267,17 +286,12 @@ export default class Profile extends Component {
           <button
             className="cancel_delete_prof_btn"
             onClick={() => {
-              document
-                .querySelector(".delete_prof_div")
-                .classList.add("fade_out");
+              document.querySelector(".delete_prof_div").classList.add("fade_out");
 
               setTimeout(() => {
-                document.querySelector(".prof_username_div").style.visibility =
-                  "visible";
-                document.querySelector(".prof_password_div").style.visibility =
-                  "visible";
-                document.querySelector(".prof_button_div").style.visibility =
-                  "visible";
+                document.querySelector(".prof_username_div").style.visibility = "visible";
+                document.querySelector(".prof_password_div").style.visibility = "visible";
+                document.querySelector(".prof_button_div").style.visibility = "visible";
                 this.setState({
                   isDeleteClicked: false,
                 });
@@ -301,29 +315,17 @@ export default class Profile extends Component {
           <div className="nav_div">
             <ul>
               <li>
-                <NavLink
-                  to={`/palette/${this.state.id}`}
-                  className="navLink"
-                  activeClassName="activeLink"
-                >
+                <NavLink to={"/palette"} className="navLink" activeClassName="activeLink">
                   Palette
                 </NavLink>
               </li>
               <li>
-                <NavLink
-                  to={`/community/${this.state.id}`}
-                  className="navLink"
-                  activeClassName="activeLink"
-                >
+                <NavLink to={"/community"} className="navLink" activeClassName="activeLink" >
                   Community's Palette
                 </NavLink>
               </li>
               <li>
-                <NavLink
-                  to={`/profile/${this.state.id}`}
-                  className="navLink"
-                  activeClassName="activeLink"
-                >
+                <NavLink to={"/profile"} className="navLink" activeClassName="activeLink">
                   My Profile
                 </NavLink>
               </li>
@@ -385,15 +387,9 @@ export default class Profile extends Component {
               <div className="prof_button_div">
                 <button
                   onClick={() => {
-                    document.querySelector(
-                      ".prof_username_div"
-                    ).style.visibility = "hidden";
-                    document.querySelector(
-                      ".prof_password_div"
-                    ).style.visibility = "hidden";
-                    document.querySelector(
-                      ".prof_button_div"
-                    ).style.visibility = "hidden";
+                    document.querySelector(".prof_username_div").style.visibility = "hidden";
+                    document.querySelector(".prof_password_div").style.visibility = "hidden";
+                    document.querySelector(".prof_button_div").style.visibility = "hidden";
                     this.setState({
                       isDeleteClicked: true,
                     });

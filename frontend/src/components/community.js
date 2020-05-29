@@ -106,7 +106,7 @@ export default class Community extends Component {
             <ul>
               <li>
                 <NavLink
-                  to={`/palette/${this.state.id}`}
+                  to={"/palette"}
                   className="navLink"
                   activeClassName="activeLink"
                 >
@@ -115,7 +115,7 @@ export default class Community extends Component {
               </li>
               <li>
                 <NavLink
-                  to={`/community/${this.state.id}`}
+                  to={"/community"}
                   className="navLink"
                   activeClassName="activeLink"
                 >
@@ -124,7 +124,7 @@ export default class Community extends Component {
               </li>
               <li>
                 <NavLink
-                  to={`/profile/${this.state.id}`}
+                  to={"/profile"}
                   className="navLink"
                   activeClassName="activeLink"
                 >

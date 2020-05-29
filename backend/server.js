@@ -1,21 +1,22 @@
 const express = require("express");
 const cors = require("cors");
 const mongo = require("mongoose");
-const User = require("./model/User").User; // load schema
-const History = require("./model/History").History; // load schema
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+// load schemas
+const User = require("./model/User").User;
+const History = require("./model/History").History;
 require("dotenv/config");
 
 const app = express();
-
 app.use(cors());
 app.use(express.json());
 
 // connect to mongoDB
-mongo.connect(
-  process.env.DB_CONNECTION,
+mongo.connect(process.env.DB_CONNECTION,
   { useUnifiedTopology: true, useNewUrlParser: true },
-  () => console.log("connected to DB!")
-);
+  () => console.log("connected to DB!"));
 mongo.set("useCreateIndex", true);
 
 app.get("/", (req, res) => {
@@ -24,75 +25,111 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/palette/:id", async (req, res) => {
-  await User.find({ _id: req.params.id }, (err, user) => {
+app.get("/palette", async (req, res) => {
+  // find encoded user 
+  let decodedUser = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY);
+
+  await User.findById(decodedUser._id, (err, user) => {
     if (err) res.json("error");
 
-    if (user != null) {
-      res.send(user);
-    }
+    // check is user exists ?
+
+    res.json(user);
   });
 });
+
+// send every palette to community
+app.get("/community", async (req, res) => {
+  await History.find({}, (err, users) => {
+    if (err) res.json(err);
+
+    res.json(users);
+  });
+});
+
+app.get("/profile", (req, res) => {
+  // find encoded user
+  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.SECRET_KEY); // check if expired
+
+  User.findById(decodedUser._id, (err, user) => {
+    if (err) res.json("error");
+
+    res.json(user);
+  });
+});
+
 
 // retrieve login info sent by client
 app.post("/login", async (req, res) => {
   await User.findOne({ username: req.body.username }, (err, user) => {
-    // user not found
-    if (user == null) {
-      // user does not exists
-      res.json("not_exists");
-    }
+    if (err) res.json("error");
 
     // user found/exists
+    if (user) {
+      // validation passwords match
+      if (bcrypt.compareSync(req.body.password, user.password)) {
+
+        // retrieve user
+        const loggedUser = {
+          _id: user._id,
+          username: user.username,
+          password: user.password,
+          palette: user.palette,
+          date: user.date
+        };
+
+        // jwt token
+        let token = jwt.sign(loggedUser, process.env.SECRET_KEY, {
+          expiresIn: 1440
+        });
+
+        res.json({
+          message: "success",
+          token: token
+        });
+      }
+
+      // password does not match
+      else {
+        res.json("password_invalid");
+      }
+    }
+    // user does not exists
     else {
-      // verify if password is the same
-      User.findOne(
-        { username: req.body.username, password: req.body.password },
-        (err, user2) => {
-          // password does not match
-          if (user2 == null) {
-            res.json("password_invalid");
-          } else {
-            res.json({ user2, message: "success" });
-          }
-        }
-      );
+      res.json("not_exists");
     }
   });
 });
 
-// set up post for register to be called in register.html
-// route to receive the request
-// listen to a post by client
 app.post("/register", (req, res) => {
-  const user = {
-    username: req.body.username.toString(),
-    password: req.body.password.toString(),
-  };
-
   // insert into db
   User.findOne({ username: req.body.username }, async (err, user) => {
-    // user not found
-    if (user == null) {
-      // save to db
-      try {
+
+    if (err) res.json(err);
+
+    // user not found => save user
+    if (!user) {
+      // hash password ***
+      bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
+
+        if (err) res.json(err);
+
+        // create user
         const newUser = new User({
-          username: req.body.username.toString(),
-          password: req.body.password.toString(),
+          username: req.body.username,
+          password: hashedPassword,
         });
 
-        const savedUser = await newUser.save();
-        console.log("saved new user!");
-
-        // send response back to client
-        res.status(200).json("success");
-      } catch (err) {
-        res.status(400).send(err);
-      }
+        // save user in db
+        await newUser.save(() => {
+          res.json("success");
+        });
+      })
     }
-    // user found/exists
+
+    // user already exists
     else {
-      res.status(200).json("exists");
+      res.json("exists");
     }
   });
 });
@@ -146,16 +183,7 @@ app.delete("/palette/:id/:paletteId", (req, res) => {
   });
 });
 
-app.get("/profile/:id", (req, res) => {
-  User.findById(req.params.id, (err, user) => {
-    if (err) return;
-
-    res.json(user);
-  });
-});
-
 app.delete("/profile/:id", (req, res) => {
-  console.log("S");
   User.findByIdAndDelete(req.params.id, (err, data) => {
     if (err) res.json("error");
 
@@ -192,25 +220,14 @@ app.put("/profile/username/:id", async (req, res) => {
 
 // update password from profile
 app.put("/profile/password/:id", (req, res) => {
-  User.findByIdAndUpdate(
-    { _id: req.params.id },
-    { password: req.body.password },
-    (err, user) => {
-      if (err) {
-        res.json(err);
-      }
-
-      res.json("success");
+  User.findByIdAndUpdate({ _id: req.params.id }, { password: req.body.password }, (err, user) => {
+    if (err) {
+      res.json(err);
     }
+
+    res.json("success");
+  }
   );
-});
-
-app.get("/community", async (req, res) => {
-  await History.find({}, (err, users) => {
-    if (err) res.json(err);
-
-    res.json(users);
-  });
 });
 
 app.listen(5000, () => console.log("listening on port 5000"));

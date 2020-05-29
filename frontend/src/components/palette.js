@@ -8,6 +8,7 @@ import "./navbar.css";
 import chroma from "chroma-js";
 import * as clipboard from "clipboard-polyfill/dist/clipboard-polyfill.promise";
 import moment from "moment";
+import jwt_decode from 'jwt-decode';
 
 // msg shown when user copies hex code
 const ShowCopiedMsg = () => {
@@ -23,7 +24,7 @@ export default class Palette extends Component {
     super(props);
 
     this.state = {
-      id: this.props.match.params.id,
+      id: "",
       NB_ITEMS: 4,
       LIMIT_REQUEST: 1,
       isCopied: false,
@@ -36,16 +37,27 @@ export default class Palette extends Component {
       savedMsg: "",
       savedColor: "",
       paletteData: [],
+      jwtToken: ""
     };
 
     this.savePalette = this.savePalette.bind(this);
     this.closeList = this.closeList.bind(this);
+    this.setAccount = this.setAccount.bind(this);
   }
 
   // when DOM loads up
   componentDidMount() {
+    this.setAccount();
     this.generate();
     this.copyToClipboard();
+  }
+
+  setAccount() {
+    // retrieve user
+    const token = localStorage.getItem("usertoken");
+    const decodedUser = jwt_decode(token);
+    console.log(decodedUser);
+
   }
 
   adjust(pos) {
@@ -70,28 +82,28 @@ export default class Palette extends Component {
     if (pos < 2) {
       document
         .querySelectorAll(".adjust_div")
-        [pos].classList.remove("open_left");
+      [pos].classList.remove("open_left");
       document.querySelectorAll(".adjust_div")[pos].classList.add("open_right");
     } else {
       document
         .querySelectorAll(".adjust_div")
-        [pos].classList.remove("open_right");
+      [pos].classList.remove("open_right");
       document.querySelectorAll(".adjust_div")[pos].classList.add("open_left");
     }
 
     document
       .querySelectorAll(".adjust_div")
-      [pos].classList.remove("close_adjust_div");
+    [pos].classList.remove("close_adjust_div");
     document
       .querySelectorAll(".adjust_div")
-      [pos].classList.add("open_adjust_div");
+    [pos].classList.add("open_adjust_div");
   }
 
   closeAdjustDiv(pos) {
     // set the active container to the top of the hierarchy
     document
       .querySelectorAll(".hex_div")
-      [pos].classList.remove("highest_index");
+    [pos].classList.remove("highest_index");
 
     // highen the opacity of all divs
     for (let i = 0; i < this.state.NB_ITEMS; i++) {
@@ -108,10 +120,10 @@ export default class Palette extends Component {
     // hide adjust div
     document
       .querySelectorAll(".adjust_div")
-      [pos].classList.remove("open_adjust_div");
+    [pos].classList.remove("open_adjust_div");
     document
       .querySelectorAll(".adjust_div")
-      [pos].classList.add("close_adjust_div");
+    [pos].classList.add("close_adjust_div");
   }
 
   assignInputColor(pos, hexCode) {
@@ -167,7 +179,7 @@ export default class Palette extends Component {
     // all 3 inputs from current hex div
     const inputs = document
       .querySelectorAll(".adjust_div")
-      [pos].querySelectorAll("input");
+    [pos].querySelectorAll("input");
 
     // dragging state
     for (let i = 0; i < inputs.length; i++) {
@@ -571,7 +583,7 @@ export default class Palette extends Component {
       },
     })
       .then((res) => res.json())
-      .then((data) => {});
+      .then((data) => { });
   }
 
   // when user doesnt have any palette saved yet
@@ -690,7 +702,7 @@ export default class Palette extends Component {
             <ul>
               <li>
                 <NavLink
-                  to={`/palette/${this.state.id}`}
+                  to={"/palette"}
                   className="navLink"
                   activeClassName="activeLink"
                 >
@@ -699,7 +711,7 @@ export default class Palette extends Component {
               </li>
               <li>
                 <NavLink
-                  to={`/community/${this.state.id}`}
+                  to={"/community"}
                   className="navLink"
                   activeClassName="activeLink"
                 >
@@ -709,7 +721,7 @@ export default class Palette extends Component {
               </li>
               <li>
                 <NavLink
-                  to={`/profile/${this.state.id}`}
+                  to={"/profile"}
                   className="navLink"
                   activeClassName="activeLink"
                 >
@@ -997,7 +1009,7 @@ export default class Palette extends Component {
           </div>
         </div>
         <div className="rose-round-div"></div>
-      </div>
+      </div >
     );
   }
 }

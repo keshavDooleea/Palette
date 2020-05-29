@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import loading from "../assets/loading.gif";
 import logo from "../assets/logo.png";
 import "../App.css";
@@ -17,7 +17,13 @@ function displayMsg(div, msgElement, msg) {
   }, 2500);
 }
 
-export default class Login extends Component {
+class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.login = this.login.bind(this);
+  }
+
+
   registerClicked(e) {
     document.querySelector(".login_form").reset();
   }
@@ -95,9 +101,12 @@ export default class Login extends Component {
           displayMsg(errorMsgDiv, errorMsg, "Login successful!");
           errorMsg.style.color = "rgb(189, 76, 76);";
 
+          // save token
+          localStorage.setItem('usertoken', data.token);
+
           // redirect to palette.html
           setTimeout(() => {
-            window.location.assign("/palette/" + data.user2._id);
+            this.props.history.push("/palette");
           }, 2600);
         }
       });
@@ -156,3 +165,5 @@ export default class Login extends Component {
     );
   }
 }
+
+export default withRouter(Login)
