@@ -95,6 +95,12 @@ export default class Community extends Component {
     );
   }
 
+  logOut(e) {
+    e.preventDefault();
+    localStorage.removeItem('usertoken');
+    this.props.history.push("/");
+  }
+
   render() {
     return (
       <div className="community">
@@ -132,9 +138,7 @@ export default class Community extends Component {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/" className="navLink" id="logout">
-                  Log out
-                </NavLink>
+                <button className="navLink" id="logout" onClick={this.logOut.bind(this)}>Log out</button>
               </li>
             </ul>
           </div>

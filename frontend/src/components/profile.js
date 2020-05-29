@@ -318,6 +318,12 @@ export default class Profile extends Component {
     );
   }
 
+  logOut(e) {
+    e.preventDefault();
+    localStorage.removeItem('usertoken');
+    this.props.history.push("/");
+  }
+
   render() {
     return (
       <div className="profile">
@@ -343,9 +349,7 @@ export default class Profile extends Component {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/" className="navLink" id="logout">
-                  Log out
-                </NavLink>
+                <button className="navLink" id="logout" onClick={this.logOut.bind(this)}>Log out</button>
               </li>
             </ul>
           </div>

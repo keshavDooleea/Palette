@@ -39,8 +39,8 @@
   justify-content: center;
   pointer-events: none;
   background-color: #849994;
-  border-top-right-radius: 30px;
-  border-bottom-right-radius: 30px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
   color: #fff;
   font-family: manus;
   font-size: 22px;
@@ -54,8 +54,8 @@
   align-items: center;
   position: relative;
   background-color: #849994;
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
 }
 
 .nav_div ul {
@@ -108,4 +108,10 @@
 
 #logout {
   color: #f4f3ef;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: inherit;
+  font-size: 18px;
+  font-family: "Josefin Sans", sans-serif;
 }
