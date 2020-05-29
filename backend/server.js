@@ -61,41 +61,44 @@ app.get("/profile", (req, res) => {
 // retrieve login info sent by client
 app.post("/login", async (req, res) => {
   await User.findOne({ username: req.body.username }, (err, user) => {
-    if (err) res.json("error");
+    // user not found
+    if (user == null) {
+      // user does not exists
+      res.json("not_exists");
+    }
 
     // user found/exists
-    if (user) {
-      // validation passwords match
-      if (bcrypt.compareSync(req.body.password, user.password)) {
-
-        // retrieve user
-        const loggedUser = {
-          _id: user._id,
-          username: user.username,
-          password: user.password,
-          palette: user.palette,
-          date: user.date
-        };
-
-        // generate jwt token
-        let token = jwt.sign(loggedUser, process.env.SECRET_KEY, {
-          expiresIn: 1440
-        });
-
-        res.json({
-          message: "success",
-          token: token
-        });
-      }
-
-      // password does not match
-      else {
-        res.json("password_invalid");
-      }
-    }
-    // user does not exists
     else {
-      res.json("not_exists");
+      // verify if password is the same
+      User.findOne(
+        { username: req.body.username, password: req.body.password },
+        (err, user2) => {
+          // password does not match
+          if (user2 == null) {
+            res.json("password_invalid");
+          } else {
+
+            // retrieve user
+            const loggedUser = {
+              _id: user2._id,
+              username: user2.username,
+              password: user2.password,
+              palette: user2.palette,
+              date: user2.date
+            };
+
+            // generate jwt token
+            let token = jwt.sign(loggedUser, process.env.SECRET_KEY, {
+              expiresIn: 1440
+            });
+
+            res.json({
+              message: "success",
+              token: token
+            });
+          }
+        }
+      );
     }
   });
 });
@@ -103,32 +106,27 @@ app.post("/login", async (req, res) => {
 app.post("/register", (req, res) => {
   // insert into db
   User.findOne({ username: req.body.username }, async (err, user) => {
-
-    if (err) res.json(err);
-
-    // user not found => save user
-    if (!user) {
-      // hash password ***
-      bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
-
-        if (err) res.json(err);
-
-        // create user
+    // user not found
+    if (user == null) {
+      // save to db
+      try {
         const newUser = new User({
-          username: req.body.username,
-          password: hashedPassword,
+          username: req.body.username.toString(),
+          password: req.body.password.toString(),
         });
 
-        // save user in db
-        await newUser.save(() => {
-          res.json("success");
-        });
-      })
+        const savedUser = await newUser.save();
+        console.log("saved new user!");
+
+        // send response back to client
+        res.status(200).json("success");
+      } catch (err) {
+        res.status(400).send(err);
+      }
     }
-
-    // user already exists
+    // user found/exists
     else {
-      res.json("exists");
+      res.status(200).json("exists");
     }
   });
 });

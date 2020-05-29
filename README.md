@@ -11,7 +11,7 @@ Allows to generate random colors which can be changed and ajusted as wished. Use
 Add your MongoDB account credentiels in .env file
 
 ```bash
-npm install mongoose express nodemon cors dotenv bcrypt jsonwebtoken
+npm install mongoose express nodemon cors dotenv jsonwebtoken
 create .env file 
 nodemon server.js
 ```
