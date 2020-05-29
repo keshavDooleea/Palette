@@ -37,7 +37,7 @@ export default class Palette extends Component {
       savedMsg: "",
       savedColor: "",
       paletteData: [],
-      jwtToken: ""
+      jwtToken: []
     };
 
     this.savePalette = this.savePalette.bind(this);
@@ -56,8 +56,7 @@ export default class Palette extends Component {
     // retrieve user
     const token = localStorage.getItem("usertoken");
     const decodedUser = jwt_decode(token);
-    console.log(decodedUser);
-
+    this.state.jwtToken.push(decodedUser);
   }
 
   adjust(pos) {
@@ -287,12 +286,14 @@ export default class Palette extends Component {
       };
 
       // send data to server
-      fetch(`http://localhost:5000/palette/${this.state.id}`, {
+      fetch("http://localhost:5000/palette", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
-          "content-type": "application/json",
-        },
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          authorization: `Bearer ${localStorage.usertoken}`,
+        }
       })
         .then((res) => res.json())
         .then((data) => {
@@ -576,10 +577,12 @@ export default class Palette extends Component {
     });
 
     // post to server
-    fetch(`http://localhost:5000/palette/${this.state.id}/${paletteId}`, {
+    fetch(`http://localhost:5000/palette/${paletteId}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
+        Accept: 'application/json',
+        authorization: `Bearer ${localStorage.usertoken}`,
       },
     })
       .then((res) => res.json())
@@ -658,17 +661,19 @@ export default class Palette extends Component {
   showList() {
     // fetch data only once instead of infinite
     if (this.state.LIMIT_REQUEST === 1) {
-      fetch(`http://localhost:5000/palette/${this.state.id}`, {
+      fetch("http://localhost:5000/palette", {
         method: "GET",
         headers: {
           "content-type": "application/JSON",
+          Accept: 'application/json',
+          authorization: `Bearer ${localStorage.usertoken}`
         },
       })
         .then((res) => res.json())
         .then((data) => {
           this.setState({
             LIMIT_REQUEST: 2,
-            paletteData: data[0].palette,
+            paletteData: data.palette,
           });
         });
     }

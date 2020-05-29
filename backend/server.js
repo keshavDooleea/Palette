@@ -27,14 +27,13 @@ app.get("/", (req, res) => {
 
 app.get("/palette", async (req, res) => {
   // find encoded user 
-  let decodedUser = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY);
+  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.SECRET_KEY);
 
   await User.findById(decodedUser._id, (err, user) => {
     if (err) res.json("error");
 
     // check is user exists ?
-
-    res.json(user);
+    res.send(user);
   });
 });
 
@@ -78,7 +77,7 @@ app.post("/login", async (req, res) => {
           date: user.date
         };
 
-        // jwt token
+        // generate jwt token
         let token = jwt.sign(loggedUser, process.env.SECRET_KEY, {
           expiresIn: 1440
         });
@@ -134,7 +133,10 @@ app.post("/register", (req, res) => {
   });
 });
 
-app.post("/palette/:id", (req, res) => {
+app.post("/palette", (req, res) => {
+  // find encoded user
+  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.SECRET_KEY); // check if expired
+
   // retrieve info
   const body = {
     hexArray: req.body.codeArray,
@@ -142,7 +144,7 @@ app.post("/palette/:id", (req, res) => {
   };
 
   // find user and push palette
-  User.findById(req.params.id, async (err, user) => {
+  User.findById(decodedUser._id, async (err, user) => {
     if (user != null) {
       // save to all time history
       const newItem = new History({
@@ -168,8 +170,11 @@ app.post("/palette/:id", (req, res) => {
 });
 
 // delete specific palette
-app.delete("/palette/:id/:paletteId", (req, res) => {
-  User.findById(req.params.id, async (err, user) => {
+app.delete("/palette/:paletteId", (req, res) => {
+  // find encoded user
+  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.SECRET_KEY); // check if expired
+
+  User.findById(decodedUser._id, async (err, user) => {
     for (let i = 0; i < user.palette.length; i++) {
       // palette found
       if (user.palette[i]._id == req.params.paletteId) {
@@ -183,8 +188,11 @@ app.delete("/palette/:id/:paletteId", (req, res) => {
   });
 });
 
-app.delete("/profile/:id", (req, res) => {
-  User.findByIdAndDelete(req.params.id, (err, data) => {
+app.delete("/profile", (req, res) => {
+  // find encoded user
+  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.SECRET_KEY); // check if expired
+
+  User.findByIdAndDelete(decodedUser._id, (err, data) => {
     if (err) res.json("error");
 
     res.json("success");
@@ -192,7 +200,10 @@ app.delete("/profile/:id", (req, res) => {
 });
 
 // update username from profile
-app.put("/profile/username/:id", async (req, res) => {
+app.put("/profile/username", async (req, res) => {
+  // find encoded user
+  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.SECRET_KEY); // check if expired
+
   await User.exists({ username: req.body.username }, function (err, user) {
     if (err) {
       res.send(err);
@@ -202,16 +213,13 @@ app.put("/profile/username/:id", async (req, res) => {
         res.json("exists");
       } else {
         // update
-        User.findByIdAndUpdate(
-          { _id: req.params.id },
-          { username: req.body.username },
-          (err, user) => {
-            if (err) {
-              res.json(err);
-            }
-
-            res.json("success");
+        User.findByIdAndUpdate({ _id: decodedUser._id }, { username: req.body.username }, (err, user) => {
+          if (err) {
+            res.json(err);
           }
+
+          res.json("success");
+        }
         );
       }
     }
@@ -219,8 +227,11 @@ app.put("/profile/username/:id", async (req, res) => {
 });
 
 // update password from profile
-app.put("/profile/password/:id", (req, res) => {
-  User.findByIdAndUpdate({ _id: req.params.id }, { password: req.body.password }, (err, user) => {
+app.put("/profile/password", (req, res) => {
+  // find encoded user
+  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.SECRET_KEY); // check if expired
+
+  User.findByIdAndUpdate({ _id: decodedUser._id }, { password: req.body.password }, (err, user) => {
     if (err) {
       res.json(err);
     }

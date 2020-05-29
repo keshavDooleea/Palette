@@ -154,8 +154,12 @@ export default class Profile extends Component {
       this.closeUsernameDiv();
 
       // update data
-      fetch(`http://localhost:5000/profile/username/${this.state.id}`, {
-        headers: { "Content-Type": "application/json" },
+      fetch("http://localhost:5000/profile/username", {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: 'application/json',
+          authorization: `Bearer ${localStorage.usertoken}`
+        },
         method: "PUT",
         body: JSON.stringify({
           username: newUsername,
@@ -202,8 +206,12 @@ export default class Profile extends Component {
       this.closePasswordDiv();
 
       // update data
-      fetch(`http://localhost:5000/profile/password/${this.state.id}`, {
-        headers: { "Content-Type": "application/json" },
+      fetch("http://localhost:5000/profile/password", {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: 'application/json',
+          authorization: `Bearer ${localStorage.usertoken}`
+        },
         method: "PUT",
         body: JSON.stringify({
           password: newPassword,
@@ -263,8 +271,13 @@ export default class Profile extends Component {
   }
 
   deleteRequest() {
-    fetch(`http://localhost:5000/profile/${this.state.id}`, {
+    fetch("http://localhost:5000/profile", {
       method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+        Accept: 'application/json',
+        authorization: `Bearer ${localStorage.usertoken}`,
+      }
     })
       .then((res) => res.json())
       .then((data) => {
