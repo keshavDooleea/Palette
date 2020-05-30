@@ -31,6 +31,7 @@ export default class Profile extends Component {
   }
 
   componentDidMount() {
+    document.querySelector("body").style.overflow = "hidden";
     this.fetchData();
   }
 

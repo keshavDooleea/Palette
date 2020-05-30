@@ -597,7 +597,7 @@
 
 @media screen and (max-width: 780px) {
   body {
-    height: 10vh;
+    height: 220vh;
     background-color: #f4f3ef;
     overflow-y: auto;
   }

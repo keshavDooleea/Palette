@@ -17,6 +17,7 @@ export default class Community extends Component {
   }
 
   componentDidMount() {
+    document.querySelector("body").style.overflow = "hidden";
     this.fetchHistory();
   }
 

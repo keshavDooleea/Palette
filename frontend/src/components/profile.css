@@ -362,9 +362,6 @@
 }
 
 @media screen and (max-width: 780px) { 
-  body {
-  }
-
   .profile_div {
     width: 90%;
     display: flex;

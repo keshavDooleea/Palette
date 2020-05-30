@@ -45,6 +45,10 @@ export default class Palette extends Component {
 
   // when DOM loads up
   componentDidMount() {
+    if (window.innerWidth <= 780) {
+      document.querySelector("body").style.overflow = "auto";
+    }
+
     this.generate();
     this.copyToClipboard();
   }
