@@ -166,20 +166,24 @@
     top: 0;
     bottom: 0;
     width: 100%;
-    height: 100%;
     z-index: 10;
     background-color: #849994;
+  }
+
+  .palette_mobile_nav {
+    height: 250vh;
   }
 
   .palette_mobile_nav ul,
   .com_mobile_nav ul,
   .prof_mobile_nav ul {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+    overflow: hidden;
   }
 
   .palette_mobile_nav ul li,

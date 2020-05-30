@@ -876,6 +876,7 @@ export default class Palette extends Component {
                 <h1>#123456</h1>
               </div>
             </div>
+
             {/* 1 */}
             <div className="hex_div">
               <div className="adjust_div open_right">
