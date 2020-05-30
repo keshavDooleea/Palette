@@ -360,3 +360,36 @@
   justify-content: space-evenly;
   margin-top: 10px;
 }
+
+@media screen and (max-width: 780px) { 
+  body {
+  }
+
+  .profile_div {
+    width: 90%;
+    display: flex;
+
+  }
+
+  .prof_image_div {
+    display: none;
+  }
+
+  .prof_username_div,
+  .prof_password_div {
+    width: 98%;
+  }
+
+  .prof_username_div h1,
+  .prof_password_div h1,
+  .prof_username_div p,
+  .prof_password_div p {
+    font-size: 17px;
+  }
+
+  .prof_button_div button {
+    width: 50%;
+    font-size: 17px;
+  }
+
+}

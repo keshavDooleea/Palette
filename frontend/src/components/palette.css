@@ -597,7 +597,7 @@
 
 @media screen and (max-width: 780px) {
   body {
-    height: 220vh;
+    height: 10vh;
     background-color: #f4f3ef;
     overflow-y: auto;
   }
@@ -609,7 +609,7 @@
   .palette_main {
     height: 220vh;
     display: flex;
-    flex-direction: column;
+    flex-direction: column;    
   }
 
   .actions_div {

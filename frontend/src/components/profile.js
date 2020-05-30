@@ -424,6 +424,7 @@ export default class Profile extends Component {
             </ul>
           </div>
         </nav>
+
         <div className="profile_main">
           <div className="rose-prof-div"></div>
           <div className="profile_div">
