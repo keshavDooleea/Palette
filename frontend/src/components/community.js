@@ -11,6 +11,8 @@ export default class Community extends Component {
     this.state = {
       isDataEmpty: false, // set to true if some prob occurs
       historyData: [],
+      isHamburgerClicked: false,
+      isMobileNavLoaded: false,
     };
   }
 
@@ -94,6 +96,32 @@ export default class Community extends Component {
     );
   }
 
+  openHamburger() {
+    const hamburgers = document.querySelectorAll(".com_hamburger span");
+
+    hamburgers.forEach(span => {
+      span.style.backgroundColor = "#f4f3ef";
+    });
+    document.querySelector(".com_mobile_nav").style.display = "flex";
+    document.querySelector(".com_mobile_nav").classList.remove("nav_slide_in");
+    document.querySelector(".com_mobile_nav").classList.add("nav_slide_out");
+
+  }
+
+  closeHamburger() {
+    const hamburgers = document.querySelectorAll(".com_hamburger span");
+
+    if (this.state.isMobileNavLoaded) {
+
+      hamburgers.forEach(span => {
+        span.style.backgroundColor = "#849994";
+      });
+
+      document.querySelector(".com_mobile_nav").classList.remove("nav_slide_out");
+      document.querySelector(".com_mobile_nav").classList.add("nav_slide_in");
+    }
+  }
+
   logOut(e) {
     e.preventDefault();
     localStorage.removeItem('usertoken');
@@ -103,10 +131,60 @@ export default class Community extends Component {
   render() {
     return (
       <div className="community">
+        {/* open close hamburger  */}
+        <div className="com_mobile_nav">
+          <ul>
+            <li>
+              <NavLink
+                to={"/palette"}
+                className="navLink"
+                activeClassName="activeLink"
+              >
+                Palette
+                </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={"/community"}
+                className="navLink"
+                activeClassName="activeLink"
+              >
+                {" "}
+                  Community's Palette
+                </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={"/profile"}
+                className="navLink"
+                activeClassName="activeLink"
+              >
+                My Profile
+                </NavLink>
+            </li>
+            <li>
+              <button className="navLink" id="logout" onClick={this.logOut.bind(this)}>Log out</button>
+            </li>
+          </ul>
+        </div>
+
+        {this.state.isHamburgerClicked ? this.openHamburger() : this.closeHamburger()}
+
         <nav className="com_nav">
           <div className="color_palette_div">
             <h1>Color Palette</h1>
           </div>
+
+          <div className="com_hamburger"
+            onClick={() => this.setState({
+              isMobileNavLoaded: true,
+              isHamburgerClicked: !this.state.isHamburgerClicked,
+            })}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
           <div className="nav_div">
             <ul>
               <li>

@@ -35,6 +35,8 @@ export default class Palette extends Component {
       savedMsg: "",
       savedColor: "",
       paletteData: [],
+      isHamburgerClicked: false,
+      isMobileNavLoaded: false,
     };
 
     this.savePalette = this.savePalette.bind(this);
@@ -649,6 +651,32 @@ export default class Palette extends Component {
     );
   }
 
+  openHamburger() {
+    const hamburgers = document.querySelectorAll(".palette_hamburger span");
+
+    hamburgers.forEach(span => {
+      span.style.backgroundColor = "#f4f3ef";
+    });
+    document.querySelector(".palette_mobile_nav").style.display = "flex";
+    document.querySelector(".palette_mobile_nav").classList.remove("nav_slide_in");
+    document.querySelector(".palette_mobile_nav").classList.add("nav_slide_out");
+
+  }
+
+  closeHamburger() {
+    const hamburgers = document.querySelectorAll(".palette_hamburger span");
+
+    if (this.state.isMobileNavLoaded) {
+
+      hamburgers.forEach(span => {
+        span.style.backgroundColor = "#849994";
+      });
+
+      document.querySelector(".palette_mobile_nav").classList.remove("nav_slide_out");
+      document.querySelector(".palette_mobile_nav").classList.add("nav_slide_in");
+    }
+  }
+
   logOut(e) {
     e.preventDefault();
     localStorage.removeItem('usertoken');
@@ -658,10 +686,61 @@ export default class Palette extends Component {
   render() {
     return (
       <div className="palette">
+
+        {/* open close hamburger  */}
+        <div className="palette_mobile_nav">
+          <ul>
+            <li>
+              <NavLink
+                to={"/palette"}
+                className="navLink"
+                activeClassName="activeLink"
+              >
+                Palette
+                </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={"/community"}
+                className="navLink"
+                activeClassName="activeLink"
+              >
+                {" "}
+                  Community's Palette
+                </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={"/profile"}
+                className="navLink"
+                activeClassName="activeLink"
+              >
+                My Profile
+                </NavLink>
+            </li>
+            <li>
+              <button className="navLink" id="logout" onClick={this.logOut.bind(this)}>Log out</button>
+            </li>
+          </ul>
+        </div>
+
+        {this.state.isHamburgerClicked ? this.openHamburger() : this.closeHamburger()}
+
         <nav className="palette_nav">
           <div className="color_palette_div">
             <h1>Color Palette</h1>
           </div>
+
+          <div className="palette_hamburger"
+            onClick={() => this.setState({
+              isMobileNavLoaded: true,
+              isHamburgerClicked: !this.state.isHamburgerClicked,
+            })}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
           <div className="nav_div">
             <ul>
               <li>
