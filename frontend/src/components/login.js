@@ -43,19 +43,13 @@ class Login extends Component {
 
     // length validation
     if (username.length < 5) {
-      displayMsg(
-        errorMsgDiv,
-        errorMsg,
-        "Username must be longer than 4 letters!"
-      );
+      displayMsg(errorMsgDiv, errorMsg, "Username must be longer than 4 letters!");
       return;
+
     } else if (password.length < 5) {
-      displayMsg(
-        errorMsgDiv,
-        errorMsg,
-        "Password must be longer than 4 letters!"
-      );
+      displayMsg(errorMsgDiv, errorMsg, "Password must be longer than 4 letters!");
       return;
+
     } else {
       errorMsgDiv.style.display = "none";
     }

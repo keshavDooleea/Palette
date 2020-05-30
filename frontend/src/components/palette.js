@@ -3,8 +3,8 @@ import { NavLink } from "react-router-dom";
 import lock from "../assets/lock.png";
 import unlock from "../assets/unlock.png";
 import adjust from "../assets/adjust.png";
-import "./palette.css";
 import "./navbar.css";
+import "./palette.css";
 import chroma from "chroma-js";
 import * as clipboard from "clipboard-polyfill/dist/clipboard-polyfill.promise";
 import moment from "moment";
@@ -68,30 +68,20 @@ export default class Palette extends Component {
 
     // show adjust div
     if (pos < 2) {
-      document
-        .querySelectorAll(".adjust_div")
-      [pos].classList.remove("open_left");
+      document.querySelectorAll(".adjust_div")[pos].classList.remove("open_left");
       document.querySelectorAll(".adjust_div")[pos].classList.add("open_right");
     } else {
-      document
-        .querySelectorAll(".adjust_div")
-      [pos].classList.remove("open_right");
+      document.querySelectorAll(".adjust_div")[pos].classList.remove("open_right");
       document.querySelectorAll(".adjust_div")[pos].classList.add("open_left");
     }
 
-    document
-      .querySelectorAll(".adjust_div")
-    [pos].classList.remove("close_adjust_div");
-    document
-      .querySelectorAll(".adjust_div")
-    [pos].classList.add("open_adjust_div");
+    document.querySelectorAll(".adjust_div")[pos].classList.remove("close_adjust_div");
+    document.querySelectorAll(".adjust_div")[pos].classList.add("open_adjust_div");
   }
 
   closeAdjustDiv(pos) {
     // set the active container to the top of the hierarchy
-    document
-      .querySelectorAll(".hex_div")
-    [pos].classList.remove("highest_index");
+    document.querySelectorAll(".hex_div")[pos].classList.remove("highest_index");
 
     // highen the opacity of all divs
     for (let i = 0; i < this.state.NB_ITEMS; i++) {
@@ -106,12 +96,8 @@ export default class Palette extends Component {
     // document.querySelectorAll(".adjust")[pos].style.opacity = "0.5";
 
     // hide adjust div
-    document
-      .querySelectorAll(".adjust_div")
-    [pos].classList.remove("open_adjust_div");
-    document
-      .querySelectorAll(".adjust_div")
-    [pos].classList.add("close_adjust_div");
+    document.querySelectorAll(".adjust_div")[pos].classList.remove("open_adjust_div");
+    document.querySelectorAll(".adjust_div")[pos].classList.add("close_adjust_div");
   }
 
   assignInputColor(pos, hexCode) {
@@ -127,35 +113,21 @@ export default class Palette extends Component {
     const color = chroma(hex);
 
     // hue color
-    hues[
-      pos
-    ].style.backgroundImage = `linear-gradient(to right, rgb(255, 0, 0), rgb(255,255 ,0), rgb(0, 255, 0), rgb(0, 255, 255),
-     rgb(0,0,255), rgb(255,0,255), rgb(255,0,0))`;
+    hues[pos].style.backgroundImage =
+      `linear-gradient(to right, rgb(255, 0, 0), rgb(255,255 ,0), rgb(0, 255, 0), rgb(0, 255, 255), rgb(0,0,255), rgb(255,0,255), rgb(255,0,0))`;
 
     // get chroma brightness of current color
     const lowBrightness = color.set("hsl.l", 0);
     const middleBrightness = color.set("hsl.l", 0.5);
     const highBrightness = color.set("hsl.l", 1);
-    const brightnessScale = chroma.scale([
-      lowBrightness,
-      middleBrightness,
-      highBrightness,
-    ]);
-    brightness[
-      pos
-    ].style.backgroundImage = `linear-gradient(to right, ${brightnessScale(
-      0
-    )}, ${brightnessScale(0.5)}, ${brightnessScale(1)})`;
+    const brightnessScale = chroma.scale([lowBrightness, middleBrightness, highBrightness,]);
+    brightness[pos].style.backgroundImage = `linear-gradient(to right, ${brightnessScale(0)}, ${brightnessScale(0.5)}, ${brightnessScale(1)})`;
 
     // get the lowest and highest saturation of corresponding color
     const lowSat = color.set("hsl.s", 0);
     const highSat = color.set("hsl.s", 1);
     const saturationScale = chroma.scale([lowSat, color, highSat]);
-    sat[
-      pos
-    ].style.backgroundImage = `linear-gradient(to right, ${saturationScale(
-      0
-    )}, ${saturationScale(1)})`;
+    sat[pos].style.backgroundImage = `linear-gradient(to right, ${saturationScale(0)}, ${saturationScale(1)})`;
   }
 
   // adjust div hue, brightness and saturation inputs
@@ -165,9 +137,7 @@ export default class Palette extends Component {
     const colors = document.querySelectorAll(".color");
 
     // all 3 inputs from current hex div
-    const inputs = document
-      .querySelectorAll(".adjust_div")
-    [pos].querySelectorAll("input");
+    const inputs = document.querySelectorAll(".adjust_div")[pos].querySelectorAll("input");
 
     // dragging state
     for (let i = 0; i < inputs.length; i++) {
@@ -426,9 +396,7 @@ export default class Palette extends Component {
         });
 
         setTimeout(() => {
-          document
-            .querySelector(".hexCopied")
-            .classList.add("remove_hexCopied");
+          document.querySelector(".hexCopied").classList.add("remove_hexCopied");
           hexDiv[i].classList.remove("shine_border");
 
           // enable other divs
@@ -531,9 +499,7 @@ export default class Palette extends Component {
   // load colors on list onto divs
   loadListOnDiv(e) {
     const divs = document.querySelectorAll(".color");
-    const colors = e.target.parentElement.parentElement.querySelectorAll(
-      ".list_color_span"
-    );
+    const colors = e.target.parentElement.parentElement.querySelectorAll(".list_color_span");
 
     // update divs background as well as adjust inputs
     for (let i = 0; i < colors.length; i++) {
@@ -556,9 +522,7 @@ export default class Palette extends Component {
 
   // delete corresponding div and send back to server
   deleteListOnDiv(e) {
-    const paletteId = e.target.parentElement.parentElement.getAttribute(
-      "data-key"
-    );
+    const paletteId = e.target.parentElement.parentElement.getAttribute("data-key");
 
     // enable fetch
     this.setState({

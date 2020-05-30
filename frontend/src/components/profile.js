@@ -105,9 +105,7 @@ export default class Profile extends Component {
   }
 
   closePasswordDiv() {
-    document
-      .querySelector(".password_change_div")
-      .classList.add("remove_slide_pass_in");
+    document.querySelector(".password_change_div").classList.add("remove_slide_pass_in");
 
     setTimeout(() => {
       document.querySelector(".prof_username_div").style.opacity = "1";
@@ -129,12 +127,14 @@ export default class Profile extends Component {
         textColor: "rgb(189, 76, 76)",
         showMessage: true,
       });
+
     } else if (newUsername.length < 5) {
       this.setState({
         messageShown: "Enter more than 4 letters",
         textColor: "rgb(189, 76, 76)",
         showMessage: true,
       });
+
     } else {
       // disappear div
       this.closeUsernameDiv();
@@ -161,7 +161,9 @@ export default class Profile extends Component {
               textColor: "rgb(64, 122, 64)",
               showMessage: true,
             });
-          } else if (data === "exists") {
+          }
+
+          else if (data === "exists") {
             this.setState({
               messageShown: "Username already exists",
               textColor: "rgb(189, 76, 76)",
@@ -181,13 +183,17 @@ export default class Profile extends Component {
         textColor: "rgb(189, 76, 76)",
         showMessage: true,
       });
-    } else if (newPassword.length < 5) {
+    }
+
+    else if (newPassword.length < 5) {
       this.setState({
         messageShown: "Enter more than 4 letters",
         textColor: "rgb(189, 76, 76)",
         showMessage: true,
       });
-    } else {
+    }
+
+    else {
       // disappear div
       this.closePasswordDiv();
 
