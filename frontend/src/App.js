@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route /*Redirect*/ } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import "./App.css";
 
 // auth
@@ -16,33 +16,25 @@ import Profile from "./components/profile";
 
 // form
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    // Bind the this context to the handler function
-    this.handler = this.handler.bind(this);
-
-    // Set some state
-    this.state = {
-      isLogged: false,
-    };
-  }
-
-  // This method will be sent to the child component
-  handler(value) {
-    this.setState({
-      isLogged: value,
-    });
-  }
 
   render() {
     return (
       <Router>
-        <Route path={["/", "/login"]} exact strict component={Login}></Route>
-        <Route path="/register" exact strict component={Register}></Route>
-        <Route path="/palette" exact component={Palette}></Route>
-        <Route path="/community" exact component={Community}></Route>
-        <Route path="/profile" exact component={Profile}></Route>
+        <Route exact path={["/", "/login"]} strict component={Login}></Route>
+
+        <Route exact path="/register" strict component={Register}></Route>
+
+        <Route exact path="/palette" render={() => (
+          localStorage.usertoken ? <Palette /> : <Redirect to="/" />
+        )}></Route>
+
+        <Route exact path="/community" render={() => (
+          localStorage.usertoken ? <Community /> : <Redirect to="/" />
+        )}></Route>
+
+        <Route exact path="/profile" render={() => (
+          localStorage.usertoken ? <Profile /> : <Redirect to="/" />
+        )}></Route>
       </Router>
     );
   }

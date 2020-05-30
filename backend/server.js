@@ -15,7 +15,7 @@ app.use(express.json());
 
 // connect to mongoDB
 mongo.connect(process.env.DB_CONNECTION,
-  { useUnifiedTopology: true, useNewUrlParser: true },
+  { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false },
   () => console.log("connected to DB!"));
 mongo.set("useCreateIndex", true);
 

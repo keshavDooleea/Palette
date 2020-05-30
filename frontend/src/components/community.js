@@ -9,7 +9,6 @@ export default class Community extends Component {
     super(props);
 
     this.state = {
-      id: this.props.match.params.id,
       isDataEmpty: false, // set to true if some prob occurs
       historyData: [],
     };
@@ -98,7 +97,7 @@ export default class Community extends Component {
   logOut(e) {
     e.preventDefault();
     localStorage.removeItem('usertoken');
-    this.props.history.push("/");
+    window.location.assign("/");
   }
 
   render() {

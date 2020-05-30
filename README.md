@@ -19,6 +19,6 @@ nodemon server.js
 
 ```bash
 npm init 
-npm install chroma-js clipboard-polyfill moment jwt-decode
+npm install chroma-js clipboard-polyfill moment
 npm start 
 ```

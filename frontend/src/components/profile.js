@@ -4,14 +4,12 @@ import userLogo from "../assets/user.png";
 import "./profile.css";
 import "./navbar.css";
 import moment from "moment";
-import jwt_decode from "jwt-decode";
 
 export default class Profile extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      id: "",
       data: [],
       password: "",
       textColor: "",
@@ -20,7 +18,6 @@ export default class Profile extends Component {
       isDeleteClicked: false,
       showMessage: false,
       messageShown: "",
-      user: {}
     };
 
     this.fetchData = this.fetchData.bind(this);
@@ -32,18 +29,7 @@ export default class Profile extends Component {
   }
 
   componentDidMount() {
-    this.setAccount();
     this.fetchData();
-  }
-
-  setAccount() {
-    // retrieve user
-    const token = localStorage.usertoken;
-    const decodedUser = jwt_decode(token);
-
-    this.setState({
-      user: decodedUser,
-    });
   }
 
   fetchData() {
@@ -321,7 +307,7 @@ export default class Profile extends Component {
   logOut(e) {
     e.preventDefault();
     localStorage.removeItem('usertoken');
-    this.props.history.push("/");
+    window.location.assign("/");
   }
 
   render() {

@@ -8,7 +8,6 @@ import "./navbar.css";
 import chroma from "chroma-js";
 import * as clipboard from "clipboard-polyfill/dist/clipboard-polyfill.promise";
 import moment from "moment";
-import jwt_decode from 'jwt-decode';
 
 // msg shown when user copies hex code
 const ShowCopiedMsg = () => {
@@ -24,7 +23,6 @@ export default class Palette extends Component {
     super(props);
 
     this.state = {
-      id: "",
       NB_ITEMS: 4,
       LIMIT_REQUEST: 1,
       isCopied: false,
@@ -37,27 +35,18 @@ export default class Palette extends Component {
       savedMsg: "",
       savedColor: "",
       paletteData: [],
-      jwtToken: []
     };
 
     this.savePalette = this.savePalette.bind(this);
     this.closeList = this.closeList.bind(this);
-    this.setAccount = this.setAccount.bind(this);
   }
 
   // when DOM loads up
   componentDidMount() {
-    this.setAccount();
     this.generate();
     this.copyToClipboard();
   }
 
-  setAccount() {
-    // retrieve user
-    const token = localStorage.getItem("usertoken");
-    const decodedUser = jwt_decode(token);
-    this.state.jwtToken.push(decodedUser);
-  }
 
   adjust(pos) {
     // set the active container to the top of the hierarchy
@@ -699,7 +688,7 @@ export default class Palette extends Component {
   logOut(e) {
     e.preventDefault();
     localStorage.removeItem('usertoken');
-    this.props.history.push("/");
+    window.location.assign("/");
   }
 
   render() {
