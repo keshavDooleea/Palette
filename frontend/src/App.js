@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import "./App.css";
 
-// auth
-// https://reacttraining.com/react-router/web/example/auth-workflow
-
 // to access params in url: this.props.match.params.id
 
 // components
@@ -14,14 +11,12 @@ import Palette from "./components/palette";
 import Community from "./components/community";
 import Profile from "./components/profile";
 
-// form
 class App extends Component {
 
   render() {
     return (
       <Router>
         <Route exact path={["/", "/login"]} strict component={Login}></Route>
-
         <Route exact path="/register" strict component={Register}></Route>
 
         <Route exact path="/palette" render={() => (
