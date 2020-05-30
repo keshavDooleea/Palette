@@ -88,8 +88,8 @@ app.post("/login", async (req, res) => {
             };
 
             // generate jwt token
+            // removed expiresIn: 1440
             let token = jwt.sign(loggedUser, process.env.SECRET_KEY, {
-              expiresIn: 1440
             });
 
             res.json({

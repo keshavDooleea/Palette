@@ -780,8 +780,9 @@
   
   .load_list,
   .delete_list {
-    font-size: 12px;
+    font-size: 9px;
   }
+  
   
   .rose-round-div {
     transform: translate(-35%, 60%);
