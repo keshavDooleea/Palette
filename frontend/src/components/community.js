@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import "./community.css";
 import "./navbar.css";
 import moment from "moment";
 
-export default class Community extends Component {
+class Community extends Component {
   constructor(props) {
     super(props);
 
@@ -22,7 +22,7 @@ export default class Community extends Component {
   }
 
   fetchHistory() {
-    fetch("http://localhost:5000/community")
+    fetch("/community")
       .then((res) => res.json())
       .then((data) => {
         if (data === null) {
@@ -126,7 +126,7 @@ export default class Community extends Component {
   logOut(e) {
     e.preventDefault();
     localStorage.removeItem('usertoken');
-    window.location.assign("/");
+    this.props.history.push("/");
   }
 
   render() {
@@ -230,3 +230,5 @@ export default class Community extends Component {
     );
   }
 }
+
+export default withRouter(Community);

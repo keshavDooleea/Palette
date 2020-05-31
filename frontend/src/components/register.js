@@ -62,7 +62,7 @@ export default class Register extends Component {
     loadingGif.style.display = "block";
 
     // post to server
-    fetch("http://localhost:5000/register", {
+    fetch("/register", {
       method: "POST",
       body: JSON.stringify(user),
       headers: {

@@ -65,7 +65,7 @@ class Login extends Component {
     loadingGif.style.display = "block";
 
     // post to server
-    fetch("http://localhost:5000/login", {
+    fetch("/login", {
       method: "POST",
       body: JSON.stringify(user),
       headers: {

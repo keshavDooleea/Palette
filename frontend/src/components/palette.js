@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import lock from "../assets/lock.png";
 import unlock from "../assets/unlock.png";
 import adjust from "../assets/adjust.png";
@@ -18,7 +18,7 @@ const ShowCopiedMsg = () => {
   );
 };
 
-export default class Palette extends Component {
+class Palette extends Component {
   constructor(props) {
     super(props);
 
@@ -251,7 +251,7 @@ export default class Palette extends Component {
       };
 
       // send data to server
-      fetch("http://localhost:5000/palette", {
+      fetch("/palette", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -536,7 +536,7 @@ export default class Palette extends Component {
     });
 
     // post to server
-    fetch(`http://localhost:5000/palette/${paletteId}`, {
+    fetch(`/palette/${paletteId}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
@@ -620,7 +620,7 @@ export default class Palette extends Component {
   showList() {
     // fetch data only once instead of infinite
     if (this.state.LIMIT_REQUEST === 1) {
-      fetch("http://localhost:5000/palette", {
+      fetch("/palette", {
         method: "GET",
         headers: {
           "content-type": "application/JSON",
@@ -684,7 +684,7 @@ export default class Palette extends Component {
   logOut(e) {
     e.preventDefault();
     localStorage.removeItem('usertoken');
-    window.location.assign("/");
+    this.props.history.push("/");
   }
 
   render() {
@@ -1059,3 +1059,5 @@ export default class Palette extends Component {
     );
   }
 }
+
+export default withRouter(Palette);

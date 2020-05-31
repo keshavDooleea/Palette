@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import userLogo from "../assets/user.png";
 import "./profile.css";
 import "./navbar.css";
 import moment from "moment";
 
-export default class Profile extends Component {
+class Profile extends Component {
   constructor(props) {
     super(props);
 
@@ -37,7 +37,7 @@ export default class Profile extends Component {
 
   fetchData() {
 
-    fetch("http://localhost:5000/profile", {
+    fetch("/profile", {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
@@ -143,7 +143,7 @@ export default class Profile extends Component {
       this.closeUsernameDiv();
 
       // update data
-      fetch("http://localhost:5000/profile/username", {
+      fetch("/profile/username", {
         headers: {
           "Content-Type": "application/json",
           Accept: 'application/json',
@@ -201,7 +201,7 @@ export default class Profile extends Component {
       this.closePasswordDiv();
 
       // update data
-      fetch("http://localhost:5000/profile/password", {
+      fetch("/profile/password", {
         headers: {
           "Content-Type": "application/json",
           Accept: 'application/json',
@@ -266,7 +266,7 @@ export default class Profile extends Component {
   }
 
   deleteRequest() {
-    fetch("http://localhost:5000/profile", {
+    fetch("/profile", {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
@@ -342,7 +342,7 @@ export default class Profile extends Component {
   logOut(e) {
     e.preventDefault();
     localStorage.removeItem('usertoken');
-    window.location.assign("/");
+    this.props.history.push("/");
   }
 
   render() {
@@ -500,3 +500,5 @@ export default class Profile extends Component {
     );
   }
 }
+
+export default withRouter(Profile);
