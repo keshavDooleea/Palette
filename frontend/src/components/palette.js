@@ -251,7 +251,7 @@ class Palette extends Component {
       };
 
       // send data to server
-      fetch("/palette", {
+      fetch("https://colorpalettemern.herokuapp.com/palette", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -536,7 +536,7 @@ class Palette extends Component {
     });
 
     // post to server
-    fetch(`/palette/${paletteId}`, {
+    fetch(`https://colorpalettemern.herokuapp.com/palette/${paletteId}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
@@ -620,7 +620,7 @@ class Palette extends Component {
   showList() {
     // fetch data only once instead of infinite
     if (this.state.LIMIT_REQUEST === 1) {
-      fetch("/palette", {
+      fetch("https://colorpalettemern.herokuapp.com/palette", {
         method: "GET",
         headers: {
           "content-type": "application/JSON",

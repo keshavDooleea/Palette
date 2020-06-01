@@ -1,33 +1,32 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongo = require("mongoose");
-const bcrypt = require("bcrypt");
+const path = require('path');
 const jwt = require("jsonwebtoken");
+const PORT = process.env.PORT || 8080;
 
 // load schemas
 const User = require("./model/User").User;
 const History = require("./model/History").History;
-require("dotenv/config");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 // connect to mongoDB
-mongo.connect(process.env.DB_CONNECTION,
+mongo.connect(process.env.MONGODB_URI || process.env.DB_CONNECTION,
   { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false },
   () => console.log("connected to DB!"));
 mongo.set("useCreateIndex", true);
 
 app.get("/", (req, res) => {
-  res.json({
-    message: "success",
-  });
+  res.redirect('/login');
 });
 
 app.get("/palette", async (req, res) => {
   // find encoded user 
-  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.SECRET_KEY);
+  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.JWT_KEY);
 
   await User.findById(decodedUser._id, (err, user) => {
     if (err) res.json("error");
@@ -48,7 +47,7 @@ app.get("/community", async (req, res) => {
 
 app.get("/profile", (req, res) => {
   // find encoded user
-  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.SECRET_KEY); // check if expired
+  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.JWT_KEY); // check if expired
 
   User.findById(decodedUser._id, (err, user) => {
     if (err) res.json("error");
@@ -89,7 +88,7 @@ app.post("/login", async (req, res) => {
 
             // generate jwt token
             // removed expiresIn: 1440
-            let token = jwt.sign(loggedUser, process.env.SECRET_KEY, {
+            let token = jwt.sign(loggedUser, process.env.JWT_KEY, {
             });
 
             res.json({
@@ -133,7 +132,7 @@ app.post("/register", (req, res) => {
 
 app.post("/palette", (req, res) => {
   // find encoded user
-  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.SECRET_KEY); // check if expired
+  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.JWT_KEY); // check if expired
 
   // retrieve info
   const body = {
@@ -170,7 +169,7 @@ app.post("/palette", (req, res) => {
 // delete specific palette
 app.delete("/palette/:paletteId", (req, res) => {
   // find encoded user
-  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.SECRET_KEY); // check if expired
+  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.JWT_KEY); // check if expired
 
   User.findById(decodedUser._id, async (err, user) => {
     for (let i = 0; i < user.palette.length; i++) {
@@ -188,7 +187,7 @@ app.delete("/palette/:paletteId", (req, res) => {
 
 app.delete("/profile", (req, res) => {
   // find encoded user
-  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.SECRET_KEY); // check if expired
+  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.JWT_KEY); // check if expired
 
   User.findByIdAndDelete(decodedUser._id, (err, data) => {
     if (err) res.json("error");
@@ -200,7 +199,7 @@ app.delete("/profile", (req, res) => {
 // update username from profile
 app.put("/profile/username", async (req, res) => {
   // find encoded user
-  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.SECRET_KEY); // check if expired
+  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.JWT_KEY); // check if expired
 
   await User.exists({ username: req.body.username }, function (err, user) {
     if (err) {
@@ -227,7 +226,7 @@ app.put("/profile/username", async (req, res) => {
 // update password from profile
 app.put("/profile/password", (req, res) => {
   // find encoded user
-  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.SECRET_KEY); // check if expired
+  let decodedUser = jwt.verify(req.headers['authorization'].split(' ')[1], process.env.JWT_KEY); // check if expired
 
   User.findByIdAndUpdate({ _id: decodedUser._id }, { password: req.body.password }, (err, user) => {
     if (err) {
@@ -239,4 +238,12 @@ app.put("/profile/password", (req, res) => {
   );
 });
 
-app.listen(5000, () => console.log("listening on port 5000"));
+// deploy
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("frontend/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend/build", "index.html"));
+  });
+}
+
+app.listen(PORT, () => console.log(`listening on port ${PORT}`));

@@ -23,6 +23,10 @@ class Login extends Component {
     this.login = this.login.bind(this);
   }
 
+  componentDidMount() {
+    document.querySelector("body").style.overflow = "hidden";
+  }
+
 
   registerClicked(e) {
     document.querySelector(".login_form").reset();
@@ -65,7 +69,7 @@ class Login extends Component {
     loadingGif.style.display = "block";
 
     // post to server
-    fetch("/login", {
+    fetch("https://colorpalettemern.herokuapp.com/login", {
       method: "POST",
       body: JSON.stringify(user),
       headers: {

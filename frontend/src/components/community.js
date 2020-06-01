@@ -22,7 +22,7 @@ class Community extends Component {
   }
 
   fetchHistory() {
-    fetch("/community")
+    fetch("https://colorpalettemern.herokuapp.com/community")
       .then((res) => res.json())
       .then((data) => {
         if (data === null) {

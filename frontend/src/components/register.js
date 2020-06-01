@@ -62,7 +62,7 @@ export default class Register extends Component {
     loadingGif.style.display = "block";
 
     // post to server
-    fetch("/register", {
+    fetch("https://colorpalettemern.herokuapp.com/register", {
       method: "POST",
       body: JSON.stringify(user),
       headers: {

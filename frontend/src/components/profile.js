@@ -37,7 +37,7 @@ class Profile extends Component {
 
   fetchData() {
 
-    fetch("/profile", {
+    fetch("https://colorpalettemern.herokuapp.com/profile", {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
@@ -143,7 +143,7 @@ class Profile extends Component {
       this.closeUsernameDiv();
 
       // update data
-      fetch("/profile/username", {
+      fetch("https://colorpalettemern.herokuapp.com/profile/username", {
         headers: {
           "Content-Type": "application/json",
           Accept: 'application/json',
@@ -201,7 +201,7 @@ class Profile extends Component {
       this.closePasswordDiv();
 
       // update data
-      fetch("/profile/password", {
+      fetch("https://colorpalettemern.herokuapp.com/profile/password", {
         headers: {
           "Content-Type": "application/json",
           Accept: 'application/json',
@@ -266,7 +266,7 @@ class Profile extends Component {
   }
 
   deleteRequest() {
-    fetch("/profile", {
+    fetch("https://colorpalettemern.herokuapp.com/profile", {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
