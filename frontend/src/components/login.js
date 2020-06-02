@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import loading from "../assets/loading.gif";
 import logo from "../assets/logo.png";
+import showPassImg from "../assets/show_pass.png";
+import hidePassImg from "../assets/hide_pass.png";
 import "../App.css";
 
 function displayMsg(div, msgElement, msg) {
@@ -20,7 +22,13 @@ function displayMsg(div, msgElement, msg) {
 class Login extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      isPasswordClicked: false
+    }
+
     this.login = this.login.bind(this);
+    this.toggleEye = this.toggleEye.bind(this);
   }
 
   componentDidMount() {
@@ -110,6 +118,26 @@ class Login extends Component {
       });
   }
 
+  // show hide password
+  toggleEye() {
+    const input = document.querySelector(".passInput");
+    const eye = document.querySelector(".pass_field img");
+
+    // change state
+    this.setState({
+      isPasswordClicked: !this.state.isPasswordClicked
+    });
+
+    if (!this.state.isPasswordClicked) {
+      input.type = "text";
+      eye.src = showPassImg;
+    } else {
+      input.type = "password";
+      eye.src = hidePassImg;
+    }
+
+  }
+
   render() {
     return (
       <div className="parent">
@@ -131,9 +159,10 @@ class Login extends Component {
                 <legend>Username</legend>
                 <input type="text" spellCheck="false" name="username"></input>
               </fieldset>
-              <fieldset>
+              <fieldset className="pass_field">
                 <legend>Password</legend>
-                <input type="text" spellCheck="false" name="password"></input>
+                <input type="password" spellCheck="false" className="passInput" name="password"></input>
+                <img src={hidePassImg} onClick={this.toggleEye} ></img>
               </fieldset>
               <div className="login_inputs">
                 <input

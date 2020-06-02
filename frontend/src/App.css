@@ -167,6 +167,23 @@ body {
   box-shadow: 0px 0px 4px rgb(138, 96, 96);
 }
 
+.pass_field {
+  position: relative;
+}
+
+.pass_field img {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  bottom: 0;
+  width: 30px;
+  height: 60%;
+  margin: auto 0;
+  cursor: pointer;
+  user-select: none;
+  margin-top: 15px;
+}
+
 .login_form fieldset legend,
 .register_form fieldset legend {
   color: #f29c1f;
