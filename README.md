@@ -1,7 +1,8 @@
 # Color Palette APP
 
 A full stack application developped during summer 2020 utilizing the MERN concept and CRUD. 
-It is deployed on colorpalettemern.herokuapp.com
+
+It is deployed on [colorpalettemern.herokuapp.com](https://colorpalettemern.herokuapp.com)
 
 Allows to generate random colors which can be changed and ajusted as wished. User can save their chosen colors in a palette for further use.
 
