@@ -68,6 +68,7 @@ body {
   position: absolute;
   left: 25%;
   top: 25%;
+  user-select: none;
 }
 
 .left_login_child,
@@ -167,11 +168,13 @@ body {
   box-shadow: 0px 0px 4px rgb(138, 96, 96);
 }
 
-.pass_field {
+.pass_field, 
+.registerPassField {
   position: relative;
 }
 
-.pass_field img {
+.pass_field img,
+.registerPassField img {
   position: absolute;
   top: 0;
   right: 10px;
@@ -186,7 +189,8 @@ body {
   transition: 0.4s;
 }
 
-.pass_field img:hover {
+.pass_field img:hover,
+.registerPassField img:hover {
   opacity: 1;
 }
 
@@ -259,6 +263,7 @@ body {
   cursor: pointer;
   height: 40px;
   width: 40px;
+  user-select: none;
 }
 
 .register_loading_gif {
@@ -296,6 +301,7 @@ body {
   justify-content: center;
   display: none;
   animation: error-div-animate ease-in-out 0.5s forwards;
+  user-select: none;
 }
 
 .open {

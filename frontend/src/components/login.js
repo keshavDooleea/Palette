@@ -135,7 +135,6 @@ class Login extends Component {
       input.type = "password";
       eye.src = hidePassImg;
     }
-
   }
 
   render() {
@@ -162,7 +161,7 @@ class Login extends Component {
               <fieldset className="pass_field">
                 <legend>Password</legend>
                 <input type="password" spellCheck="false" className="passInput" name="password"></input>
-                <img src={hidePassImg} onClick={this.toggleEye} ></img>
+                <img src={hidePassImg} onClick={this.toggleEye} alt="loginEye"></img>
               </fieldset>
               <div className="login_inputs">
                 <input

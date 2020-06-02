@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import back from "../assets/back.png";
 import loading from "../assets/loading.gif";
 import logo from "../assets/logo.png";
+import showPassImage from "../assets/show_pass.png";
+import hidePassImage from "../assets/hide_pass.png";
 import "../App.css";
 
 function displayMsg(div, msgElement, msg) {
@@ -24,7 +26,10 @@ export default class Register extends Component {
 
     this.state = {
       redirectLogin: false,
+      isPasswordClicked: false
     };
+
+    this.toggleEye = this.toggleEye.bind(this);
   }
 
   createAccount(e) {
@@ -91,6 +96,26 @@ export default class Register extends Component {
       });
   }
 
+  // show hide password
+  toggleEye() {
+    const input = document.querySelector(".regPassInput");
+    const eye = document.querySelector(".registerPassField img");
+
+    // change state
+    this.setState({
+      isPasswordClicked: !this.state.isPasswordClicked
+    });
+
+    if (!this.state.isPasswordClicked) {
+      input.type = "text";
+      eye.src = showPassImage;
+    } else {
+      input.type = "password";
+      eye.src = hidePassImage;
+    }
+  }
+
+
   render() {
     return (
       <div className="register_parent">
@@ -115,9 +140,10 @@ export default class Register extends Component {
                 <legend>Username</legend>
                 <input type="text" spellCheck="false" name="username"></input>
               </fieldset>
-              <fieldset>
+              <fieldset className="registerPassField">
                 <legend>Password</legend>
-                <input type="text" spellCheck="false" name="password"></input>
+                <input type="password" spellCheck="false" className="regPassInput" name="password"></input>
+                <img src={hidePassImage} onClick={this.toggleEye} alt="regEye"></img>
               </fieldset>
               <input
                 type="submit"
