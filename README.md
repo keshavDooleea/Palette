@@ -1,6 +1,6 @@
 # Color Palette APP
 
-A full stack application developped during summer 2020 utilizing  Rest API/CRUD and the MERN concept.
+A Full Stack application developped during summer 2020 utilizing  Rest API/CRUD and the MERN concept.
 
 It is deployed on [colorpalettemern.herokuapp.com](https://colorpalettemern.herokuapp.com)
 
@@ -20,6 +20,6 @@ nodemon server.js
 
 ```bash
 npm init 
-npm install chroma-js clipboard-polyfill moment
+npm install react-router-dom react-dom chroma-js clipboard-polyfill moment
 npm start 
 ```
